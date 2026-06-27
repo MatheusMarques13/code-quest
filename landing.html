@@ -1,0 +1,3260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code Quest — Academia de Criadores de Jogos</title>
+<meta name="description" content="Aprenda a criar seus próprios jogos programando. Missões diárias, recompensas e muita imaginação — tudo numa interface com vibes Ghibli.">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://retromynd-study-hub.vercel.app/">
+<meta property="og:title" content="Code Quest — Academia de Criadores de Jogos">
+<meta property="og:description" content="Aprenda a criar seus próprios jogos programando. Missões, recompensas e imaginação — numa interface com vibes Ghibli. ✨">
+<meta property="og:image" content="https://www.ghibli.jp/gallery/howl002.jpg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1038">
+<meta property="og:site_name" content="Code Quest">
+<meta property="og:locale" content="pt_BR">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Code Quest — Academia de Criadores de Jogos">
+<meta name="twitter:description" content="Aprenda a criar jogos programando. Missões, recompensas e vibes Ghibli ✨">
+<meta name="twitter:image" content="https://www.ghibli.jp/gallery/howl002.jpg">
+
+<!-- Theme color -->
+<meta name="theme-color" content="#FF6B9D">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,500&family=Press+Start+2P&family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RETROMYND — CAFÉ THEME
+   Warm, sophisticated café aesthetic for Study Hub
+   Supports: body.cafe-light | body.cafe-dark
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Source+Code+Pro:wght@400;500;600&display=swap');
+
+/* ========== CAFÉ LIGHT VARIABLES ========== */
+body.cafe-light {
+  --cafe-bg: #E8E0D4;
+  --cafe-surface: #DDD5C8;
+  --cafe-card: #EDE6DA;
+  --cafe-border: #D0C5B5;
+  --cafe-text: #3D3329;
+  --cafe-text-mid: #6B5E52;
+  --cafe-text-muted: #9A8E82;
+  --cafe-accent: #5C4D3C;
+  --cafe-accent-soft: #D4C8B8;
+  --cafe-shadow: rgba(93,77,60,0.08);
+  --cafe-highlight: #C4A882;
+  --cafe-shadow-card: 0 2px 12px rgba(93,77,60,0.08), 0 1px 3px rgba(93,77,60,0.05);
+  --cafe-shadow-hover: 0 4px 20px rgba(93,77,60,0.12), 0 2px 8px rgba(93,77,60,0.08);
+}
+
+/* ========== CAFÉ DARK VARIABLES ========== */
+body.cafe-dark {
+  --cafe-bg: #1A1714;
+  --cafe-surface: #242019;
+  --cafe-card: #2D2822;
+  --cafe-border: #3E372E;
+  --cafe-text: #F0E8DC;
+  --cafe-text-mid: #B0A898;
+  --cafe-text-muted: #7A7068;
+  --cafe-accent: #E8DFD0;
+  --cafe-accent-soft: #3E372E;
+  --cafe-shadow: rgba(0,0,0,0.3);
+  --cafe-highlight: #C4A882;
+  --cafe-shadow-card: 0 2px 12px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2);
+  --cafe-shadow-hover: 0 4px 20px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.25);
+}
+
+/* ========== FONT OVERRIDES ========== */
+
+/* Body font: DM Sans */
+body.cafe-light *,
+body.cafe-dark * {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Headings: Outfit — clean, modern geometric sans-serif */
+body.cafe-light h1:not(#rmLoginOverlay h1),
+body.cafe-light h2:not(#rmLoginOverlay *),
+body.cafe-light h3,
+body.cafe-light h4,
+body.cafe-light h5,
+body.cafe-light h6,
+body.cafe-dark h1:not(#rmLoginOverlay h1),
+body.cafe-dark h2:not(#rmLoginOverlay *),
+body.cafe-dark h3,
+body.cafe-dark h4,
+body.cafe-dark h5,
+body.cafe-dark h6 {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  letter-spacing: -0.01em !important;
+  font-weight: 600 !important;
+}
+
+/* Tags/code elements: Source Code Pro */
+body.cafe-light [class*="tag"]:not(#rmLoginOverlay *),
+body.cafe-light [class*="badge"]:not(#rmLoginOverlay *),
+body.cafe-light code,
+body.cafe-light pre,
+body.cafe-dark [class*="tag"]:not(#rmLoginOverlay *),
+body.cafe-dark [class*="badge"]:not(#rmLoginOverlay *),
+body.cafe-dark code,
+body.cafe-dark pre {
+  font-family: 'Source Code Pro', 'Courier New', monospace !important;
+}
+
+/* ========== GLOBAL BG + COLOR ========== */
+body.cafe-light,
+body.cafe-dark {
+  background: var(--cafe-bg) !important;
+  color: var(--cafe-text) !important;
+  transition: background 0.5s ease, color 0.5s ease;
+}
+
+/* Remove retro scanlines */
+body.cafe-light::after,
+body.cafe-dark::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* ========== SCROLLBAR ========== */
+body.cafe-light ::-webkit-scrollbar,
+body.cafe-dark ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+body.cafe-light ::-webkit-scrollbar-track,
+body.cafe-dark ::-webkit-scrollbar-track {
+  background: var(--cafe-surface);
+}
+body.cafe-light ::-webkit-scrollbar-thumb,
+body.cafe-dark ::-webkit-scrollbar-thumb {
+  background: var(--cafe-border);
+  border-radius: 3px;
+}
+body.cafe-light ::-webkit-scrollbar-thumb:hover,
+body.cafe-dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--cafe-highlight);
+}
+
+/* ========== SELECTION ========== */
+body.cafe-light ::selection,
+body.cafe-dark ::selection {
+  background: var(--cafe-highlight) !important;
+  color: #fff !important;
+}
+
+/* ========== HEADER / NAV ========== */
+body.cafe-light header,
+body.cafe-light [class*="header"]:not(#rmProfilePanel *):not(#rmProfileBar *),
+body.cafe-light nav,
+body.cafe-light [class*="nav"]:not(#rmProfilePanel *),
+body.cafe-light [class*="toolbar"],
+body.cafe-light [class*="topbar"],
+body.cafe-dark header,
+body.cafe-dark [class*="header"]:not(#rmProfilePanel *):not(#rmProfileBar *),
+body.cafe-dark nav,
+body.cafe-dark [class*="nav"]:not(#rmProfilePanel *),
+body.cafe-dark [class*="toolbar"],
+body.cafe-dark [class*="topbar"] {
+  background: var(--cafe-surface) !important;
+  border-color: var(--cafe-border) !important;
+  color: var(--cafe-text) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+/* ========== BACKGROUNDS: MAIN / CONTAINER ========== */
+body.cafe-light main,
+body.cafe-light [class*="main"],
+body.cafe-light [class*="content"],
+body.cafe-light [class*="wrapper"],
+body.cafe-light [class*="layout"],
+body.cafe-light [class*="page"],
+body.cafe-light [class*="grid"],
+body.cafe-light [class*="body"],
+body.cafe-light [class*="container"]:not(#rmLoginOverlay):not(#rmLoginOverlay *),
+body.cafe-light [class*="section"]:not(#rmProfilePanel *),
+body.cafe-dark main,
+body.cafe-dark [class*="main"],
+body.cafe-dark [class*="content"],
+body.cafe-dark [class*="wrapper"],
+body.cafe-dark [class*="layout"],
+body.cafe-dark [class*="page"],
+body.cafe-dark [class*="grid"],
+body.cafe-dark [class*="body"],
+body.cafe-dark [class*="container"]:not(#rmLoginOverlay):not(#rmLoginOverlay *),
+body.cafe-dark [class*="section"]:not(#rmProfilePanel *) {
+  background: transparent !important;
+  color: var(--cafe-text) !important;
+}
+
+/* ========== CARDS ========== */
+body.cafe-light [class*="card"],
+body.cafe-light [class*="Card"],
+body.cafe-light [class*="widget"],
+body.cafe-light [class*="panel"]:not(#rmProfilePanel),
+body.cafe-light [class*="box"]:not(input):not(select),
+body.cafe-dark [class*="card"],
+body.cafe-dark [class*="Card"],
+body.cafe-dark [class*="widget"],
+body.cafe-dark [class*="panel"]:not(#rmProfilePanel),
+body.cafe-dark [class*="box"]:not(input):not(select) {
+  background: var(--cafe-card) !important;
+  border: 1px solid var(--cafe-border) !important;
+  border-radius: 12px !important;
+  box-shadow: var(--cafe-shadow-card) !important;
+  color: var(--cafe-text) !important;
+}
+
+/* ========== REMOVE NOTEBOOK PAPER LINES ========== */
+body.cafe-light [class*="ruled"],
+body.cafe-light [class*="paper"],
+body.cafe-light [class*="notebook"],
+body.cafe-light [class*="lined"],
+body.cafe-dark [class*="ruled"],
+body.cafe-dark [class*="paper"],
+body.cafe-dark [class*="notebook"],
+body.cafe-dark [class*="lined"] {
+  background-image: none !important;
+  background: var(--cafe-card) !important;
+}
+
+/* Remove ::before/::after notebook decorations */
+body.cafe-light [class*="card"]::before,
+body.cafe-light [class*="card"]::after,
+body.cafe-light [class*="paper"]::before,
+body.cafe-light [class*="paper"]::after,
+body.cafe-light [class*="note"]::before,
+body.cafe-light [class*="note"]::after,
+body.cafe-dark [class*="card"]::before,
+body.cafe-dark [class*="card"]::after,
+body.cafe-dark [class*="paper"]::before,
+body.cafe-dark [class*="paper"]::after,
+body.cafe-dark [class*="note"]::before,
+body.cafe-dark [class*="note"]::after {
+  background: none !important;
+  background-image: none !important;
+  border: none !important;
+  display: none !important;
+}
+
+/* Hide notebook holes */
+body.cafe-light .nb-holes,
+body.cafe-dark .nb-holes {
+  display: none !important;
+}
+
+/* ========== HEADINGS COLOR ========== */
+body.cafe-light h1:not(#rmLoginOverlay h1),
+body.cafe-light h2:not(#rmLoginOverlay *),
+body.cafe-light h3,
+body.cafe-light h4,
+body.cafe-light h5,
+body.cafe-dark h1:not(#rmLoginOverlay h1),
+body.cafe-dark h2:not(#rmLoginOverlay *),
+body.cafe-dark h3,
+body.cafe-dark h4,
+body.cafe-dark h5 {
+  color: var(--cafe-accent) !important;
+  text-shadow: none !important;
+  letter-spacing: 0.01em !important;
+  animation: none !important;
+}
+
+/* ========== ALL TEXT READABLE ========== */
+body.cafe-light p,
+body.cafe-light li,
+body.cafe-light td,
+body.cafe-light th,
+body.cafe-light label,
+body.cafe-light [class*="desc"],
+body.cafe-light [class*="sub"],
+body.cafe-light [class*="info"]:not(#rmProfileBar *),
+body.cafe-dark p,
+body.cafe-dark li,
+body.cafe-dark td,
+body.cafe-dark th,
+body.cafe-dark label,
+body.cafe-dark [class*="desc"],
+body.cafe-dark [class*="sub"],
+body.cafe-dark [class*="info"]:not(#rmProfileBar *) {
+  color: var(--cafe-text) !important;
+}
+
+body.cafe-light [class*="card"] span,
+body.cafe-light [class*="card"] div,
+body.cafe-light main span,
+body.cafe-light main div,
+body.cafe-light [class*="content"] span,
+body.cafe-light [class*="content"] div,
+body.cafe-dark [class*="card"] span,
+body.cafe-dark [class*="card"] div,
+body.cafe-dark main span,
+body.cafe-dark main div,
+body.cafe-dark [class*="content"] span,
+body.cafe-dark [class*="content"] div {
+  color: var(--cafe-text) !important;
+}
+
+/* Muted / secondary text */
+body.cafe-light [class*="muted"],
+body.cafe-light [class*="secondary"],
+body.cafe-light [class*="gray"],
+body.cafe-light [class*="grey"],
+body.cafe-light [class*="hint"],
+body.cafe-light [class*="caption"],
+body.cafe-light small,
+body.cafe-light [class*="placeholder"],
+body.cafe-light [class*="empty"],
+body.cafe-dark [class*="muted"],
+body.cafe-dark [class*="secondary"],
+body.cafe-dark [class*="gray"],
+body.cafe-dark [class*="grey"],
+body.cafe-dark [class*="hint"],
+body.cafe-dark [class*="caption"],
+body.cafe-dark small,
+body.cafe-dark [class*="placeholder"],
+body.cafe-dark [class*="empty"] {
+  color: var(--cafe-text-muted) !important;
+}
+
+/* ========== STAT NUMBERS ========== */
+body.cafe-light [class*="stat"] [class*="val"],
+body.cafe-light [class*="stat"] [class*="num"],
+body.cafe-light [class*="stat"] [class*="count"],
+body.cafe-light [class*="streak"],
+body.cafe-light [class*="score"],
+body.cafe-dark [class*="stat"] [class*="val"],
+body.cafe-dark [class*="stat"] [class*="num"],
+body.cafe-dark [class*="stat"] [class*="count"],
+body.cafe-dark [class*="streak"],
+body.cafe-dark [class*="score"] {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  color: var(--cafe-highlight) !important;
+  text-shadow: none !important;
+  font-size: 2.2rem !important;
+  font-weight: 700 !important;
+}
+
+/* Stat labels */
+body.cafe-light [class*="stat"] [class*="label"],
+body.cafe-light [class*="stat"] [class*="title"],
+body.cafe-light [class*="stat"] small,
+body.cafe-dark [class*="stat"] [class*="label"],
+body.cafe-dark [class*="stat"] [class*="title"],
+body.cafe-dark [class*="stat"] small {
+  color: var(--cafe-text-muted) !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  font-weight: 500 !important;
+}
+
+/* ========== TIMER ========== */
+body.cafe-light [class*="timer"] [class*="display"],
+body.cafe-light [class*="timer"] [class*="time"],
+body.cafe-light [class*="clock"],
+body.cafe-light [class*="countdown"],
+body.cafe-light [class*="digit"],
+body.cafe-dark [class*="timer"] [class*="display"],
+body.cafe-dark [class*="timer"] [class*="time"],
+body.cafe-dark [class*="clock"],
+body.cafe-dark [class*="countdown"],
+body.cafe-dark [class*="digit"] {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  color: var(--cafe-highlight) !important;
+  text-shadow: none !important;
+  font-weight: 700 !important;
+}
+
+/* ========== BUTTONS ========== */
+body.cafe-light button:not(#rmLoginOverlay button):not(.rm-tb):not(.rm-bt):not(.pb-btn):not(.pb-logout):not(.pp-save):not(.pp-logout):not(.pp-close):not(.retro-toggle),
+body.cafe-light [type="button"]:not(#rmLoginOverlay *),
+body.cafe-light [type="submit"]:not(#rmLoginOverlay *),
+body.cafe-dark button:not(#rmLoginOverlay button):not(.rm-tb):not(.rm-bt):not(.pb-btn):not(.pb-logout):not(.pp-save):not(.pp-logout):not(.pp-close):not(.retro-toggle),
+body.cafe-dark [type="button"]:not(#rmLoginOverlay *),
+body.cafe-dark [type="submit"]:not(#rmLoginOverlay *) {
+  background: var(--cafe-surface) !important;
+  border: 1px solid var(--cafe-border) !important;
+  color: var(--cafe-text) !important;
+  border-radius: 50px !important;
+  cursor: pointer !important;
+  font-weight: 500 !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.02em !important;
+  padding: 6px 16px !important;
+  box-shadow: none !important;
+  transition: all 0.2s ease !important;
+}
+
+body.cafe-light button:not(#rmLoginOverlay button):not(.rm-tb):not(.rm-bt):not(.pb-btn):not(.pb-logout):not(.pp-save):not(.pp-logout):not(.pp-close):not(.retro-toggle):hover,
+body.cafe-dark button:not(#rmLoginOverlay button):not(.rm-tb):not(.rm-bt):not(.pb-btn):not(.pb-logout):not(.pp-save):not(.pp-logout):not(.pp-close):not(.retro-toggle):hover {
+  background: var(--cafe-accent-soft) !important;
+  border-color: var(--cafe-highlight) !important;
+  color: var(--cafe-accent) !important;
+  box-shadow: 0 2px 8px var(--cafe-shadow) !important;
+}
+
+/* Active buttons */
+body.cafe-light button.active:not(#rmLoginOverlay button):not(.rm-tb):not(.pb-btn),
+body.cafe-light [class*="selected"]:not(#rmLoginOverlay *),
+body.cafe-light [aria-selected="true"]:not(#rmLoginOverlay *),
+body.cafe-dark button.active:not(#rmLoginOverlay button):not(.rm-tb):not(.pb-btn),
+body.cafe-dark [class*="selected"]:not(#rmLoginOverlay *),
+body.cafe-dark [aria-selected="true"]:not(#rmLoginOverlay *) {
+  background: var(--cafe-highlight) !important;
+  color: #fff !important;
+  border-color: var(--cafe-highlight) !important;
+  box-shadow: 0 2px 8px rgba(196,168,130,0.3) !important;
+}
+
+/* Danger buttons */
+body.cafe-light [class*="danger"],
+body.cafe-light [class*="reset"],
+body.cafe-light [class*="delete"],
+body.cafe-dark [class*="danger"],
+body.cafe-dark [class*="reset"],
+body.cafe-dark [class*="delete"] {
+  border-color: #B07050 !important;
+  color: #B07050 !important;
+}
+
+/* ========== INPUTS ========== */
+body.cafe-light input:not(.rm-f):not(.pp-input):not(#rmLoginOverlay input),
+body.cafe-light textarea:not(#rmLoginOverlay textarea),
+body.cafe-light select:not(#rmLoginOverlay select),
+body.cafe-dark input:not(.rm-f):not(.pp-input):not(#rmLoginOverlay input),
+body.cafe-dark textarea:not(#rmLoginOverlay textarea),
+body.cafe-dark select:not(#rmLoginOverlay select) {
+  background: var(--cafe-surface) !important;
+  border: 1px solid var(--cafe-border) !important;
+  color: var(--cafe-text) !important;
+  border-radius: 8px !important;
+  caret-color: var(--cafe-highlight) !important;
+  font-size: 0.88rem !important;
+  box-shadow: none !important;
+}
+
+body.cafe-light input:not(#rmLoginOverlay input):focus,
+body.cafe-light textarea:not(#rmLoginOverlay textarea):focus,
+body.cafe-dark input:not(#rmLoginOverlay input):focus,
+body.cafe-dark textarea:not(#rmLoginOverlay textarea):focus {
+  border-color: var(--cafe-highlight) !important;
+  box-shadow: 0 0 0 3px rgba(196,168,130,0.2) !important;
+  outline: none !important;
+}
+
+body.cafe-light input::placeholder,
+body.cafe-light textarea::placeholder,
+body.cafe-dark input::placeholder,
+body.cafe-dark textarea::placeholder {
+  color: var(--cafe-text-muted) !important;
+}
+
+/* ========== CHECKBOXES ========== */
+body.cafe-light input[type="checkbox"],
+body.cafe-dark input[type="checkbox"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 18px !important;
+  height: 18px !important;
+  border: 1.5px solid var(--cafe-border) !important;
+  background: var(--cafe-surface) !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  position: relative !important;
+}
+
+body.cafe-light input[type="checkbox"]:checked,
+body.cafe-dark input[type="checkbox"]:checked {
+  background: var(--cafe-highlight) !important;
+  border-color: var(--cafe-highlight) !important;
+  box-shadow: 0 1px 4px rgba(196,168,130,0.3) !important;
+}
+
+body.cafe-light input[type="checkbox"]:checked::after,
+body.cafe-dark input[type="checkbox"]:checked::after {
+  content: "✓";
+  position: absolute;
+  top: -2px;
+  left: 2px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+/* ========== TAGS / BADGES ========== */
+body.cafe-light [class*="tag"]:not(#rmLoginOverlay *),
+body.cafe-light [class*="badge"]:not(#rmLoginOverlay *),
+body.cafe-dark [class*="tag"]:not(#rmLoginOverlay *),
+body.cafe-dark [class*="badge"]:not(#rmLoginOverlay *) {
+  background: var(--cafe-accent-soft) !important;
+  border: 1px solid var(--cafe-border) !important;
+  color: var(--cafe-text-mid) !important;
+  border-radius: 50px !important;
+  font-size: 0.68rem !important;
+  font-weight: 500 !important;
+  padding: 2px 10px !important;
+  font-family: 'Source Code Pro', monospace !important;
+}
+
+/* ========== TABS ========== */
+body.cafe-light [class*="tab"]:not(.rm-tb):not(#rmLoginOverlay *),
+body.cafe-light [role="tab"],
+body.cafe-dark [class*="tab"]:not(.rm-tb):not(#rmLoginOverlay *),
+body.cafe-dark [role="tab"] {
+  background: transparent !important;
+  color: var(--cafe-text-mid) !important;
+  border: 1px solid transparent !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.02em !important;
+  padding: 6px 14px !important;
+  transition: all 0.15s ease !important;
+}
+
+body.cafe-light [class*="tab"].active:not(.rm-tb),
+body.cafe-light [class*="tab"][class*="active"]:not(.rm-tb),
+body.cafe-light [role="tab"][aria-selected="true"],
+body.cafe-dark [class*="tab"].active:not(.rm-tb),
+body.cafe-dark [class*="tab"][class*="active"]:not(.rm-tb),
+body.cafe-dark [role="tab"][aria-selected="true"] {
+  background: var(--cafe-card) !important;
+  color: var(--cafe-accent) !important;
+  border-color: var(--cafe-border) !important;
+  box-shadow: var(--cafe-shadow-card) !important;
+}
+
+/* ========== PROGRESS ========== */
+body.cafe-light [class*="progress"],
+body.cafe-light progress,
+body.cafe-dark [class*="progress"],
+body.cafe-dark progress {
+  background: var(--cafe-surface) !important;
+  border: 1px solid var(--cafe-border) !important;
+  border-radius: 50px !important;
+  overflow: hidden !important;
+}
+
+body.cafe-light [class*="progress"] [class*="fill"],
+body.cafe-dark [class*="progress"] [class*="fill"] {
+  background: linear-gradient(90deg, var(--cafe-highlight), #B89060) !important;
+  box-shadow: none !important;
+  border-radius: 50px !important;
+}
+
+/* ========== LINKS ========== */
+body.cafe-light a:not(#rmLoginOverlay a),
+body.cafe-dark a:not(#rmLoginOverlay a) {
+  color: var(--cafe-highlight) !important;
+}
+
+body.cafe-light a:hover,
+body.cafe-dark a:hover {
+  color: var(--cafe-accent) !important;
+  text-decoration: underline !important;
+}
+
+/* ========== DIVIDERS ========== */
+body.cafe-light hr,
+body.cafe-light [class*="divider"],
+body.cafe-light [class*="separator"],
+body.cafe-dark hr,
+body.cafe-dark [class*="divider"],
+body.cafe-dark [class*="separator"] {
+  border-color: var(--cafe-border) !important;
+  background: var(--cafe-border) !important;
+}
+
+/* ========== TOOLTIPS / POPUPS / MODALS ========== */
+body.cafe-light [class*="tooltip"],
+body.cafe-light [class*="popup"],
+body.cafe-light [class*="modal"]:not(#rmLoginOverlay),
+body.cafe-light [class*="dropdown"],
+body.cafe-dark [class*="tooltip"],
+body.cafe-dark [class*="popup"],
+body.cafe-dark [class*="modal"]:not(#rmLoginOverlay),
+body.cafe-dark [class*="dropdown"] {
+  background: var(--cafe-card) !important;
+  border: 1px solid var(--cafe-border) !important;
+  color: var(--cafe-text) !important;
+  border-radius: 12px !important;
+  box-shadow: var(--cafe-shadow-card) !important;
+}
+
+/* ========== POST-IT / NOTE CARDS ========== */
+/* Override post-it colors with warm neutrals */
+body.cafe-light [class*="postit"],
+body.cafe-light [class*="post-it"],
+body.cafe-light [class*="sticky"],
+body.cafe-dark [class*="postit"],
+body.cafe-dark [class*="post-it"],
+body.cafe-dark [class*="sticky"] {
+  background: var(--cafe-card) !important;
+  border: 1px solid var(--cafe-border) !important;
+  border-radius: 12px !important;
+  box-shadow: var(--cafe-shadow-card) !important;
+}
+
+/* ========== STREAK ========== */
+body.cafe-light [class*="streak-num"],
+body.cafe-dark [class*="streak-num"] {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  color: var(--cafe-highlight) !important;
+  text-shadow: none !important;
+}
+
+body.cafe-light [class*="streak-fire"],
+body.cafe-dark [class*="streak-fire"] {
+  filter: sepia(0.3) hue-rotate(-10deg) !important;
+}
+
+/* ========== SAVE STATUS ========== */
+body.cafe-light [class*="save"],
+body.cafe-light [class*="autosave"],
+body.cafe-dark [class*="save"],
+body.cafe-dark [class*="autosave"] {
+  color: var(--cafe-text-muted) !important;
+}
+
+/* ========== SPLASH / LOADING SCREEN ========== */
+body.cafe-light [class*="splash"],
+body.cafe-light [class*="loading"],
+body.cafe-dark [class*="splash"],
+body.cafe-dark [class*="loading"] {
+  background: var(--cafe-bg) !important;
+  color: var(--cafe-text) !important;
+}
+
+/* ========== PROFILE PANEL ========== */
+body.cafe-light #rmProfilePanel,
+body.cafe-dark #rmProfilePanel {
+  background: var(--cafe-card) !important;
+  border-color: var(--cafe-border) !important;
+  color: var(--cafe-text) !important;
+  border-radius: 12px !important;
+}
+
+body.cafe-light #rmProfileBar,
+body.cafe-dark #rmProfileBar {
+  background: var(--cafe-surface) !important;
+  border-color: var(--cafe-border) !important;
+  color: var(--cafe-text) !important;
+}
+
+/* ========== RETRO TOGGLE BUTTON IN CAFÉ MODE ========== */
+body.cafe-light .retro-toggle,
+body.cafe-dark .retro-toggle {
+  font-family: 'DM Sans', sans-serif !important;
+  border-radius: 50px !important;
+  font-size: 0.65rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+}
+
+body.cafe-light .retro-toggle {
+  border-color: var(--cafe-border) !important;
+  color: var(--cafe-text-mid) !important;
+  background: transparent !important;
+}
+
+body.cafe-light .retro-toggle:hover {
+  background: var(--cafe-highlight) !important;
+  color: #fff !important;
+  border-color: var(--cafe-highlight) !important;
+}
+
+body.cafe-dark .retro-toggle {
+  border-color: var(--cafe-border) !important;
+  color: var(--cafe-text-muted) !important;
+  background: transparent !important;
+}
+
+body.cafe-dark .retro-toggle:hover {
+  background: var(--cafe-highlight) !important;
+  color: #fff !important;
+  border-color: var(--cafe-highlight) !important;
+}
+
+/* ========== SMOOTH TRANSITIONS ========== */
+body.cafe-light [class*="card"],
+body.cafe-light [class*="Card"],
+body.cafe-light header,
+body.cafe-light nav,
+body.cafe-light main,
+body.cafe-light button,
+body.cafe-light input,
+body.cafe-light textarea,
+body.cafe-light select,
+body.cafe-light [class*="tab"],
+body.cafe-dark [class*="card"],
+body.cafe-dark [class*="Card"],
+body.cafe-dark header,
+body.cafe-dark nav,
+body.cafe-dark main,
+body.cafe-dark button,
+body.cafe-dark input,
+body.cafe-dark textarea,
+body.cafe-dark select,
+body.cafe-dark [class*="tab"] {
+  transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s !important;
+}
+
+/* ========== HUB-SPECIFIC: STUDY HUB INDEX.HTML ========== */
+
+/* Header title — warm serif */
+body.cafe-light .header-title,
+body.cafe-dark .header-title {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  color: var(--cafe-highlight) !important;
+  text-shadow: none !important;
+  animation: none !important;
+}
+
+body.cafe-light .header-sub,
+body.cafe-light .header-date,
+body.cafe-dark .header-sub,
+body.cafe-dark .header-date {
+  color: var(--cafe-text-muted) !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+/* Scoreboard / stats bar */
+body.cafe-light .scoreboard,
+body.cafe-dark .scoreboard {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: var(--cafe-border) !important;
+}
+
+body.cafe-light .score-val,
+body.cafe-dark .score-val {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  color: var(--cafe-highlight) !important;
+  text-shadow: none !important;
+  font-size: 1.7rem !important;
+}
+
+body.cafe-light .score-val.pink,
+body.cafe-dark .score-val.pink {
+  color: var(--cafe-highlight) !important;
+  text-shadow: none !important;
+}
+
+body.cafe-light .score-val.sky,
+body.cafe-dark .score-val.sky {
+  color: var(--cafe-text-mid) !important;
+}
+
+body.cafe-light .score-label,
+body.cafe-dark .score-label {
+  color: var(--cafe-text-muted) !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+/* Progress bar */
+body.cafe-light .progress-bar,
+body.cafe-dark .progress-bar {
+  background: var(--cafe-surface) !important;
+  border-color: var(--cafe-border) !important;
+  border-radius: 50px !important;
+}
+
+body.cafe-light .progress-fill,
+body.cafe-dark .progress-fill {
+  background: linear-gradient(90deg, var(--cafe-highlight), #A07848) !important;
+  box-shadow: none !important;
+  border-radius: 50px !important;
+}
+
+/* Progress ticks */
+body.cafe-light .tick,
+body.cafe-dark .tick {
+  border-color: var(--cafe-border) !important;
+  background: var(--cafe-surface) !important;
+  border-radius: 50% !important;
+}
+
+body.cafe-light .tick.done,
+body.cafe-dark .tick.done {
+  background: var(--cafe-highlight) !important;
+  border-color: var(--cafe-highlight) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+body.cafe-light .tick.active,
+body.cafe-dark .tick.active {
+  border-color: var(--cafe-highlight) !important;
+  color: var(--cafe-highlight) !important;
+}
+
+/* Nav tabs */
+body.cafe-light .nav-tabs,
+body.cafe-dark .nav-tabs {
+  background: rgba(255,255,255,0.05) !important;
+  border-color: var(--cafe-border) !important;
+}
+
+body.cafe-light .nav-tab,
+body.cafe-dark .nav-tab {
+  font-family: 'DM Sans', sans-serif !important;
+  color: var(--cafe-text-muted) !important;
+  border-bottom-color: transparent !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+}
+
+body.cafe-light .nav-tab.active,
+body.cafe-dark .nav-tab.active {
+  color: var(--cafe-accent) !important;
+  border-bottom-color: var(--cafe-highlight) !important;
+  font-weight: 600 !important;
+}
+
+/* Stat cards */
+body.cafe-light .stat-card,
+body.cafe-dark .stat-card {
+  background: var(--cafe-card) !important;
+  border-color: var(--cafe-border) !important;
+  border-radius: 12px !important;
+  box-shadow: var(--cafe-shadow-card) !important;
+}
+
+body.cafe-light .stat-val,
+body.cafe-dark .stat-val {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  color: var(--cafe-highlight) !important;
+  text-shadow: none !important;
+  font-size: 2.4rem !important;
+}
+
+body.cafe-light .stat-val.pink,
+body.cafe-dark .stat-val.pink {
+  color: var(--cafe-highlight) !important;
+  text-shadow: none !important;
+}
+
+body.cafe-light .stat-val.sky,
+body.cafe-dark .stat-val.sky {
+  color: var(--cafe-text-mid) !important;
+}
+
+body.cafe-light .stat-val.green,
+body.cafe-dark .stat-val.green {
+  color: #7A9E7E !important;
+  text-shadow: none !important;
+}
+
+body.cafe-light .stat-lbl,
+body.cafe-dark .stat-lbl {
+  color: var(--cafe-text-muted) !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+/* Streak card */
+body.cafe-light .streak-card,
+body.cafe-dark .streak-card {
+  background: var(--cafe-card) !important;
+  border-color: var(--cafe-border) !important;
+  border-radius: 12px !important;
+}
+
+body.cafe-light .streak-num,
+body.cafe-dark .streak-num {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  color: var(--cafe-highlight) !important;
+  text-shadow: none !important;
+}
+
+body.cafe-light .streak-sub,
+body.cafe-dark .streak-sub {
+  color: var(--cafe-text-muted) !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+body.cafe-light .streak-best-val,
+body.cafe-dark .streak-best-val {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  color: var(--cafe-highlight) !important;
+}
+
+body.cafe-light .streak-best-lbl,
+body.cafe-dark .streak-best-lbl {
+  color: var(--cafe-text-muted) !important;
+}
+
+/* Section titles */
+body.cafe-light .sec-title,
+body.cafe-dark .sec-title {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  color: var(--cafe-accent) !important;
+  font-size: 1rem !important;
+  letter-spacing: 0.02em !important;
+  border-color: var(--cafe-border) !important;
+  font-weight: 700 !important;
+}
+
+/* Heatmap */
+body.cafe-light .hm-cell,
+body.cafe-dark .hm-cell {
+  background: var(--cafe-surface) !important;
+  border-radius: 3px !important;
+}
+
+body.cafe-light .hm-cell.l1,
+body.cafe-dark .hm-cell.l1 {
+  background: rgba(196,168,130,0.2) !important;
+}
+
+body.cafe-light .hm-cell.l2,
+body.cafe-dark .hm-cell.l2 {
+  background: rgba(196,168,130,0.45) !important;
+}
+
+body.cafe-light .hm-cell.l3,
+body.cafe-dark .hm-cell.l3 {
+  background: rgba(196,168,130,0.72) !important;
+}
+
+body.cafe-light .hm-cell.l4,
+body.cafe-dark .hm-cell.l4 {
+  background: var(--cafe-highlight) !important;
+  box-shadow: none !important;
+}
+
+body.cafe-light .hm-cell.today,
+body.cafe-dark .hm-cell.today {
+  outline-color: var(--cafe-accent) !important;
+}
+
+body.cafe-light .hm-month-lbl,
+body.cafe-dark .hm-month-lbl {
+  color: var(--cafe-text-muted) !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+/* Period buttons */
+body.cafe-light .period-btn,
+body.cafe-dark .period-btn {
+  font-family: 'DM Sans', sans-serif !important;
+  border-color: var(--cafe-border) !important;
+  color: var(--cafe-text-muted) !important;
+  border-radius: 50px !important;
+}
+
+body.cafe-light .period-btn.active,
+body.cafe-dark .period-btn.active {
+  border-color: var(--cafe-highlight) !important;
+  color: var(--cafe-highlight) !important;
+  background: rgba(196,168,130,0.1) !important;
+}
+
+/* Rank/history table */
+body.cafe-light .rank-table th,
+body.cafe-dark .rank-table th {
+  color: var(--cafe-text-muted) !important;
+  border-color: var(--cafe-border) !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+body.cafe-light .rank-table td,
+body.cafe-dark .rank-table td {
+  color: var(--cafe-text) !important;
+  border-color: var(--cafe-border) !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+body.cafe-light .rank-pos.gold,
+body.cafe-dark .rank-pos.gold {
+  color: var(--cafe-highlight) !important;
+}
+
+body.cafe-light .rank-score,
+body.cafe-dark .rank-score {
+  color: var(--cafe-highlight) !important;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+body.cafe-light .rank-date,
+body.cafe-dark .rank-date {
+  color: var(--cafe-text-mid) !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+/* Theme toggle in hub header */
+body.cafe-light #themeToggle,
+body.cafe-dark #themeToggle {
+  background: var(--cafe-surface) !important;
+  border-color: var(--cafe-border) !important;
+  border-radius: 50px !important;
+}
+
+/* Pixel decorations — hide in café mode */
+body.cafe-light .pixel-deco,
+body.cafe-dark .pixel-deco {
+  display: none !important;
+}
+
+/* Footer */
+body.cafe-light footer,
+body.cafe-dark footer {
+  border-color: var(--cafe-border) !important;
+  color: var(--cafe-text-muted) !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+body.cafe-light footer span,
+body.cafe-dark footer span {
+  color: var(--cafe-highlight) !important;
+}
+
+/* ========== LANDING PAGE CAFÉ OVERRIDES ========== */
+
+body.cafe-light.landing-page,
+body.cafe-light[data-page="landing"] {
+  background: var(--cafe-bg) !important;
+  color: var(--cafe-text) !important;
+}
+
+/* Clock on landing */
+body.cafe-light .clock,
+body.cafe-dark .clock {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  color: var(--cafe-highlight) !important;
+  text-shadow: none !important;
+}
+
+/* Greeting */
+body.cafe-light .greeting,
+body.cafe-dark .greeting {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  color: var(--cafe-text) !important;
+  font-weight: 700 !important;
+}
+
+/* Brand name */
+body.cafe-light .brand-name,
+body.cafe-dark .brand-name {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  color: var(--cafe-accent) !important;
+  text-shadow: none !important;
+}
+
+body.cafe-light .brand-sub,
+body.cafe-dark .brand-sub {
+  font-family: 'DM Sans', sans-serif !important;
+  color: var(--cafe-text-muted) !important;
+}
+
+/* Enter button */
+body.cafe-light .enter-btn,
+body.cafe-dark .enter-btn {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  background: var(--cafe-accent) !important;
+  border: 1.5px solid var(--cafe-accent) !important;
+  border-radius: 50px !important;
+  color: #F0E8DC !important;
+  box-shadow: 0 4px 16px var(--cafe-shadow) !important;
+  letter-spacing: 0.04em !important;
+}
+
+body.cafe-light .enter-btn svg,
+body.cafe-dark .enter-btn svg {
+  stroke: #F0E8DC !important;
+}
+
+body.cafe-light .enter-btn:hover,
+body.cafe-dark .enter-btn:hover {
+  background: var(--cafe-highlight) !important;
+  border-color: var(--cafe-highlight) !important;
+  box-shadow: 0 6px 24px rgba(196,168,130,0.35) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Glass pill */
+body.cafe-light .glass-pill,
+body.cafe-dark .glass-pill {
+  background: rgba(255,255,255,0.1) !important;
+  border: 1px solid var(--cafe-border) !important;
+  border-radius: 50px !important;
+  box-shadow: var(--cafe-shadow-card) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+body.cafe-light .pill-opt,
+body.cafe-dark .pill-opt {
+  border-radius: 50px !important;
+  color: var(--cafe-text-mid) !important;
+}
+
+body.cafe-light .pill-opt.active,
+body.cafe-dark .pill-opt.active {
+  background: var(--cafe-highlight) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+body.cafe-light .pill-opt:hover,
+body.cafe-dark .pill-opt:hover {
+  color: var(--cafe-accent) !important;
+  background: rgba(196,168,130,0.15) !important;
+}
+
+body.cafe-light .theme-label,
+body.cafe-dark .theme-label {
+  font-family: 'DM Sans', sans-serif !important;
+  color: var(--cafe-text-muted) !important;
+}
+
+/* Quote box */
+body.cafe-light .quote-box,
+body.cafe-dark .quote-box {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-style: italic !important;
+  color: var(--cafe-text-mid) !important;
+}
+
+/* Bottom bar on landing */
+body.cafe-light .bottom-group-left .retro-toggle,
+body.cafe-dark .bottom-group-left .retro-toggle {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 0.65rem !important;
+  border-radius: 50px !important;
+  background: transparent !important;
+}
+
+body.cafe-light .bottom-group-left .retro-toggle {
+  border: 1.5px solid var(--cafe-border) !important;
+  color: var(--cafe-text-mid) !important;
+}
+
+body.cafe-dark .bottom-group-left .retro-toggle {
+  border: 1.5px solid var(--cafe-border) !important;
+  color: var(--cafe-text-muted) !important;
+}
+
+body.cafe-light .bottom-group-left .retro-toggle:hover,
+body.cafe-dark .bottom-group-left .retro-toggle:hover {
+  border-color: var(--cafe-highlight) !important;
+  color: var(--cafe-highlight) !important;
+  background: rgba(196,168,130,0.12) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Landing page background for light mode */
+body.cafe-light .bg-overlay {
+  background: rgba(232,224,212,0.6) !important;
+}
+
+body.cafe-dark .bg-overlay {
+  background: rgba(26,23,20,0.65) !important;
+}
+
+/* ========== LOGIN PAGE CAFÉ OVERRIDES ========== */
+
+/* Stars become warm golden tones */
+body.cafe-light .star:nth-child(odd),
+body.cafe-dark .star:nth-child(odd) {
+  background: var(--cafe-highlight) !important;
+}
+
+body.cafe-light .star:nth-child(even),
+body.cafe-dark .star:nth-child(even) {
+  background: var(--cafe-accent) !important;
+}
+
+/* Login card */
+body.cafe-light .login-card,
+body.cafe-dark .login-card {
+  background: var(--cafe-card) !important;
+  border-color: var(--cafe-border) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--cafe-shadow-card) !important;
+}
+
+body.cafe-light .card-header h1,
+body.cafe-dark .card-header h1 {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  color: var(--cafe-accent) !important;
+}
+
+body.cafe-light .card-header p,
+body.cafe-dark .card-header p {
+  color: var(--cafe-text-muted) !important;
+}
+
+body.cafe-light .card-body,
+body.cafe-dark .card-body {
+  background: var(--cafe-card) !important;
+}
+
+/* Tabs on login */
+body.cafe-light .tabs .tab,
+body.cafe-dark .tabs .tab {
+  background: var(--cafe-surface) !important;
+  color: var(--cafe-text-mid) !important;
+  border-radius: 8px !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+body.cafe-light .tabs .tab.on,
+body.cafe-dark .tabs .tab.on {
+  background: var(--cafe-highlight) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(196,168,130,0.3) !important;
+}
+
+/* Login input fields */
+body.cafe-light .field input,
+body.cafe-dark .field input {
+  background: var(--cafe-surface) !important;
+  border-color: var(--cafe-border) !important;
+  color: var(--cafe-text) !important;
+  border-radius: 8px !important;
+}
+
+body.cafe-light .field input:focus,
+body.cafe-dark .field input:focus {
+  border-color: var(--cafe-highlight) !important;
+  box-shadow: 0 0 0 3px rgba(196,168,130,0.2) !important;
+}
+
+/* Login button */
+body.cafe-light .login-btn,
+body.cafe-dark .login-btn {
+  background: var(--cafe-accent) !important;
+  color: #F0E8DC !important;
+  border-radius: 50px !important;
+  box-shadow: 0 3px 12px var(--cafe-shadow) !important;
+  font-family: 'DM Sans', sans-serif !important;
+  border: none !important;
+}
+
+body.cafe-light .login-btn:hover,
+body.cafe-dark .login-btn:hover {
+  background: var(--cafe-highlight) !important;
+  box-shadow: 0 5px 20px rgba(196,168,130,0.35) !important;
+}
+
+/* Card footer */
+body.cafe-light .card-footer,
+body.cafe-dark .card-footer {
+  border-color: var(--cafe-border) !important;
+  color: var(--cafe-text-muted) !important;
+}
+
+/* Saved user pill */
+body.cafe-light .saved-user,
+body.cafe-dark .saved-user {
+  background: var(--cafe-accent-soft) !important;
+  border-color: var(--cafe-border) !important;
+  border-radius: 10px !important;
+}
+
+body.cafe-light .saved-user:hover,
+body.cafe-dark .saved-user:hover {
+  border-color: var(--cafe-highlight) !important;
+}
+
+body.cafe-light .saved-avatar,
+body.cafe-dark .saved-avatar {
+  background: var(--cafe-surface) !important;
+}
+
+body.cafe-light .saved-name,
+body.cafe-dark .saved-name {
+  color: var(--cafe-text) !important;
+}
+
+body.cafe-light .saved-email,
+body.cafe-dark .saved-email {
+  color: var(--cafe-text-muted) !important;
+}
+
+/* Pixel heart — warm in café mode */
+body.cafe-light .ph.p,
+body.cafe-dark .ph.p {
+  background: var(--cafe-highlight) !important;
+}
+
+/* Brand on login */
+body.cafe-light .brand span,
+body.cafe-dark .brand span {
+  color: var(--cafe-highlight) !important;
+  font-family: 'Source Code Pro', monospace !important;
+}
+
+body.cafe-light .lyric,
+body.cafe-dark .lyric {
+  color: var(--cafe-text-muted) !important;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* ========== DARK MODE SPECIFIC OVERRIDES ========== */
+
+body.cafe-dark {
+  background: var(--cafe-bg) !important;
+  color: var(--cafe-text) !important;
+}
+
+body.cafe-dark .login-card,
+body.cafe-dark .card-body {
+  background: var(--cafe-card) !important;
+}
+
+/* ========== LESSON PANEL — CAFÉ ========== */
+
+body.cafe-light .lesson-panel {
+  background: var(--cafe-bg) !important;
+}
+
+body.cafe-dark .lesson-panel {
+  background: var(--cafe-bg) !important;
+}
+
+body.cafe-light .lesson-overlay {
+  background: rgba(93,77,60,0.20) !important;
+}
+
+body.cafe-dark .lesson-overlay {
+  background: rgba(0,0,0,0.40) !important;
+}
+
+/* ========== RADIO PLAYER — CAFÉ ========== */
+
+body.cafe-dark #rm-radio-btn {
+  background: #3E372E !important;
+  color: #F0E8DC !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35) !important;
+}
+
+body.cafe-light #rm-radio-btn {
+  background: #DDD5C8 !important;
+  color: #3D3329 !important;
+  box-shadow: 0 2px 8px rgba(93,77,60,0.15) !important;
+}
+
+body.cafe-dark #rm-radio-panel {
+  background: rgba(36,32,25,0.95) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+  color: #F0E8DC !important;
+}
+
+body.cafe-light #rm-radio-panel {
+  background: rgba(237,230,218,0.96) !important;
+  border-color: rgba(93,77,60,0.12) !important;
+  color: #3D3329 !important;
+}
+
+body.cafe-dark .rm-ctrl-btn {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: rgba(255,255,255,0.10) !important;
+}
+
+body.cafe-light .rm-ctrl-btn {
+  background: rgba(93,77,60,0.06) !important;
+  border-color: rgba(93,77,60,0.10) !important;
+}
+
+body.cafe-dark #rm-play.rm-ctrl-btn {
+  background: rgba(196,168,130,0.20) !important;
+  border-color: rgba(196,168,130,0.30) !important;
+}
+
+body.cafe-light #rm-play.rm-ctrl-btn {
+  background: rgba(93,77,60,0.10) !important;
+  border-color: rgba(93,77,60,0.15) !important;
+}
+
+body.cafe-dark #rm-radio-btn.playing::before,
+body.cafe-light #rm-radio-btn.playing::before {
+  border-color: var(--cafe-highlight) !important;
+}
+
+</style>
+<style>
+:root {
+  --paper: #FFFDF8;
+  --pink: #FF6B9D;
+  --pink-soft: #FFE4EE;
+  --pink-hover: #FF4F88;
+  --blue: #6DBDE8;
+  --blue-soft: #E3F2FD;
+  --text-hub: #1E293B;
+  --text-mid: #475569;
+  --text-light: #94A3B8;
+  --shadow-hub: 0 1px 3px rgba(0,0,0,.05), 0 4px 14px rgba(0,0,0,.04);
+  --shadow-hover-hub: 0 2px 8px rgba(0,0,0,.07), 0 8px 28px rgba(0,0,0,.05);
+  --postit-peach: #FFE5D9;
+  --postit-pink: #FFE4EE;
+  --bg-overlay: rgba(0,0,0,0.35);
+  --radius: 6px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; overflow:hidden; }
+
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #fff;
+  background: #0a0a1a;
+  position: relative;
+}
+
+.wallpaper-layer {
+  position: fixed; inset: 0; z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 2.5s ease-in-out;
+}
+.wallpaper-layer.active { opacity: 1; }
+
+.bg-overlay {
+  position: fixed; inset: 0; z-index: 1;
+  background: var(--bg-overlay);
+  pointer-events: none;
+}
+
+.particles-container {
+  position: fixed; inset: 0; z-index: 2; pointer-events: none; overflow: hidden;
+}
+
+.particle-dust {
+  position: absolute;
+  background: rgba(255,235,150,0.7);
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(255,235,150,0.4);
+  animation: floatDust linear infinite;
+}
+@keyframes floatDust {
+  0% { transform: translate(0, 0) scale(1); opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.6; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(0.3); opacity: 0; }
+}
+
+.particle-firefly {
+  position: absolute;
+  background: radial-gradient(circle, rgba(255,200,50,1) 0%, rgba(255,180,50,0.6) 40%, transparent 70%);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255,200,50,0.5);
+  animation: floatFirefly ease-in-out infinite;
+}
+@keyframes floatFirefly {
+  0%, 100% { transform: translate(0, 0); opacity: 0.1; }
+  25% { transform: translate(var(--dx), var(--dy)); opacity: 0.9; }
+  50% { transform: translate(var(--dx2), var(--dy2)); opacity: 0.15; }
+  75% { transform: translate(var(--dx3), var(--dy3)); opacity: 0.8; }
+}
+
+.particle-star {
+  position: absolute;
+  background: var(--star-color, #fff);
+  border-radius: 50%;
+  animation: twinkleStar ease-in-out infinite;
+}
+.particle-star.shooting {
+  width: 2px !important;
+  height: 2px !important;
+  background: #fff;
+  box-shadow: 0 0 6px 2px rgba(255,255,255,0.8);
+  animation: shootingStar linear forwards;
+}
+@keyframes twinkleStar {
+  0%, 100% { opacity: 0.1; transform: scale(1); }
+  50% { opacity: var(--bright, 0.8); transform: scale(1.6); }
+}
+@keyframes shootingStar {
+  0% { transform: translate(0, 0) scaleX(1); opacity: 1; }
+  70% { opacity: 0.8; }
+  100% { transform: translate(var(--shoot-x), var(--shoot-y)) scaleX(12); opacity: 0; }
+}
+
+.particle-rain {
+  position: absolute; top: -30px;
+  width: 2px;
+  background: linear-gradient(transparent, rgba(180,200,240,0.6));
+  animation: rainDrop linear infinite;
+}
+@keyframes rainDrop {
+  to { transform: translateY(110vh); }
+}
+
+.retro-scanlines {
+  display: none;
+  position: fixed; inset: 0; z-index: 3; pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+}
+body.retro-dark .retro-scanlines,
+body.retro-light .retro-scanlines { display: block; }
+
+.retro-neon-border {
+  display: none;
+  position: fixed; inset: 0; z-index: 3; pointer-events: none;
+  border: 1px solid transparent;
+  animation: neonPulse 8s ease-in-out infinite;
+}
+body.retro-dark .retro-neon-border,
+body.retro-light .retro-neon-border { display: block; }
+
+@keyframes neonPulse {
+  0%, 100% { border-color: rgba(245,197,24,0); box-shadow: none; }
+  50% { border-color: rgba(245,197,24,0.08); box-shadow: inset 0 0 60px rgba(245,197,24,0.03); }
+}
+
+.landing-container {
+  position: relative; z-index: 5;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  height: 100vh; padding: 2rem;
+  text-align: center;
+}
+
+.top-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 1.8rem 2.2rem;
+  pointer-events: none;
+}
+.top-bar > * { pointer-events: auto; }
+
+.brand { display: flex; flex-direction: column; gap: 2px; }
+.brand-name {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.55rem; font-weight: 600;
+  color: var(--pink);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  letter-spacing: 2px; text-transform: uppercase;
+}
+.brand-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem; font-weight: 400;
+  color: rgba(255,255,255,0.7);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+  letter-spacing: 1px;
+}
+
+.quote-box {
+  max-width: 260px; text-align: right;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem; font-weight: 400;
+  font-style: italic;
+  color: rgba(255,255,255,0.85);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  line-height: 1.5;
+}
+
+.greeting {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.4rem; font-weight: 500;
+  color: #fff;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.5);
+  margin-bottom: 0.3rem; line-height: 1.4;
+  opacity: 0; animation: fadeUp 0.8s ease 0.3s forwards;
+}
+
+.clock {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(5rem, 14vw, 10rem);
+  font-weight: 700; color: #fff;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.45);
+  letter-spacing: -3px; line-height: 1;
+  margin-bottom: 0.8rem;
+  opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards;
+}
+
+.enter-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.05rem; font-weight: 600;
+  padding: 14px 44px;
+  border: 1px solid #E5E0DA;
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--text-hub);
+  cursor: pointer; transition: all 0.2s;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  box-shadow: var(--shadow-hub);
+  opacity: 0; animation: fadeUp 0.8s ease 0.7s forwards;
+}
+.enter-btn svg { stroke: var(--pink); }
+.enter-btn:hover {
+  box-shadow: var(--shadow-hover-hub);
+  transform: translateY(-2px);
+  border-color: var(--pink);
+}
+.enter-btn:active { transform: translateY(0); }
+
+.bottom-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 10;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding: 1.5rem 2rem; pointer-events: none;
+}
+.bottom-bar > * { pointer-events: auto; }
+
+.glass-pill {
+  display: flex; align-items: center; gap: 4px;
+  background: var(--paper);
+  border: 1px solid #E5E0DA;
+  border-radius: var(--radius);
+  padding: 4px;
+  box-shadow: var(--shadow-hub);
+  transition: all 0.2s;
+}
+.glass-pill:hover { box-shadow: var(--shadow-hover-hub); }
+.pill-opt {
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 4px; border: none;
+  background: transparent;
+  color: var(--text-light);
+  cursor: pointer; font-size: 0.85rem;
+  transition: all 0.15s ease;
+}
+.pill-opt:hover { color: var(--text-hub); background: var(--blue-soft); }
+.pill-opt.active {
+  background: var(--pink); color: #fff;
+  box-shadow: 0 2px 8px rgba(255,107,157,0.3);
+}
+.pill-opt svg { width: 16px; height: 16px; }
+
+.theme-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px; font-weight: 500;
+  color: var(--text-light);
+  letter-spacing: 1.5px; text-transform: uppercase;
+  text-align: center; margin-top: 6px;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+}
+
+.bottom-group { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.bottom-group-left { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+
+.bottom-group-left .retro-toggle {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 0.9rem !important; font-weight: 600 !important;
+  padding: 8px 20px !important;
+  border: 1px solid #E5E0DA !important;
+  border-radius: var(--radius) !important;
+  background: var(--postit-peach) !important;
+  color: var(--text-mid) !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08) !important;
+  transition: all 0.15s ease !important;
+}
+.bottom-group-left .retro-toggle:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+  background: var(--postit-pink) !important;
+  color: var(--pink-hover) !important;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+body.retro-dark .bg-overlay, body.retro-light .bg-overlay { background: rgba(0,0,0,0.55) !important; }
+body.retro-dark .clock, body.retro-light .clock {
+  font-family: VT323, monospace !important;
+  color: var(--rgold, #f5c518) !important;
+  text-shadow: 0 0 30px rgba(245,197,24,.4), 0 4px 30px rgba(0,0,0,.5) !important;
+}
+body.retro-dark .greeting, body.retro-light .greeting {
+  font-family: 'Space Mono', monospace !important;
+  color: var(--rpixel, #e8f0ff) !important;
+}
+body.retro-dark .brand-name, body.retro-light .brand-name {
+  font-family: VT323, monospace !important;
+  color: var(--rgold, #f5c518) !important;
+  text-shadow: 0 0 20px rgba(245,197,24,.4) !important;
+}
+body.retro-dark .brand-sub, body.retro-light .brand-sub {
+  font-family: 'Space Mono', monospace !important;
+  color: var(--rdim, #7a8faa) !important;
+}
+body.retro-dark .quote-box, body.retro-light .quote-box {
+  font-family: 'Space Mono', monospace !important;
+  font-style: normal !important;
+}
+body.retro-dark .enter-btn, body.retro-light .enter-btn {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 0.6rem !important;
+  background: transparent !important;
+  border: 2px solid var(--rborder, #1e3a6e) !important;
+  border-radius: 0 !important;
+  color: var(--rpixel, #e8f0ff) !important;
+  box-shadow: none !important;
+}
+body.retro-dark .enter-btn svg, body.retro-light .enter-btn svg { stroke: var(--rgold, #f5c518) !important; }
+body.retro-dark .enter-btn:hover, body.retro-light .enter-btn:hover {
+  border-color: var(--rgold, #f5c518) !important;
+  color: var(--rgold, #f5c518) !important;
+  box-shadow: 0 0 12px rgba(245,197,24,.4), 4px 4px 0 rgba(245,197,24,.3) !important;
+  transform: none !important;
+}
+body.retro-dark .glass-pill, body.retro-light .glass-pill {
+  background: transparent !important;
+  border: 2px solid var(--rborder, #1e3a6e) !important;
+  border-radius: 0 !important; box-shadow: none !important;
+}
+body.retro-dark .pill-opt, body.retro-light .pill-opt { border-radius: 0 !important; color: var(--rdim, #7a8faa) !important; }
+body.retro-dark .pill-opt.active, body.retro-light .pill-opt.active {
+  background: var(--rgold, #f5c518) !important; color: #000 !important;
+  box-shadow: 0 0 8px rgba(245,197,24,.4) !important;
+}
+body.retro-dark .pill-opt:hover, body.retro-light .pill-opt:hover {
+  color: var(--rgold, #f5c518) !important;
+  background: rgba(245,197,24,.1) !important;
+}
+body.retro-dark .theme-label, body.retro-light .theme-label {
+  font-family: 'Space Mono', monospace !important;
+  color: var(--rdim, #7a8faa) !important;
+}
+body.retro-dark .bottom-group-left .retro-toggle, body.retro-light .bottom-group-left .retro-toggle {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 0.55rem !important; border-radius: 0 !important;
+  background: transparent !important;
+  border: 2px solid var(--rborder, #1e3a6e) !important;
+  color: var(--rdim, #7a8faa) !important; box-shadow: none !important;
+}
+body.retro-dark .bottom-group-left .retro-toggle:hover, body.retro-light .bottom-group-left .retro-toggle:hover {
+  border-color: var(--rgold, #f5c518) !important;
+  color: var(--rgold, #f5c518) !important;
+  box-shadow: 0 0 8px rgba(245,197,24,.3) !important;
+  transform: none !important;
+}
+
+@media (max-width: 600px) {
+  .top-bar { padding: 1.2rem 1.2rem; }
+  .quote-box { font-size: 0.85rem; max-width: 180px; }
+  .greeting { font-size: 1.2rem; }
+  .clock { letter-spacing: -1px; }
+  .enter-btn { padding: 12px 36px; font-size: 0.95rem; }
+  .bottom-bar { padding: 1rem 1.2rem; }
+}
+
+/* ======== CAFÉ MODE LANDING OVERRIDES ======== */
+body.cafe-light,
+body.cafe-dark {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body.cafe-light .bg-overlay { background: rgba(232,224,212,0.55) !important; }
+body.cafe-dark .bg-overlay { background: rgba(26,23,20,0.68) !important; }
+
+body.cafe-light .clock,
+body.cafe-dark .clock {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  color: #C4A882 !important;
+  text-shadow: none !important;
+  letter-spacing: -1px;
+}
+
+body.cafe-light .greeting,
+body.cafe-dark .greeting {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-weight: 700 !important;
+}
+
+body.cafe-light .greeting { color: #3D3329 !important; }
+body.cafe-dark .greeting { color: #F0E8DC !important; }
+
+body.cafe-light .brand-name,
+body.cafe-dark .brand-name {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  text-shadow: none !important;
+}
+body.cafe-light .brand-name { color: #5C4D3C !important; }
+body.cafe-dark .brand-name { color: #E8DFD0 !important; }
+
+body.cafe-light .brand-sub { color: #9A8E82 !important; font-family: 'DM Sans', sans-serif !important; }
+body.cafe-dark .brand-sub { color: #7A7068 !important; font-family: 'DM Sans', sans-serif !important; }
+
+body.cafe-light .quote-box,
+body.cafe-dark .quote-box {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-style: italic !important;
+}
+body.cafe-light .quote-box { color: #6B5E52 !important; }
+body.cafe-dark .quote-box { color: #B0A898 !important; }
+
+body.cafe-light .enter-btn,
+body.cafe-dark .enter-btn {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  background: #5C4D3C !important;
+  border: 1.5px solid #5C4D3C !important;
+  border-radius: 50px !important;
+  color: #F0E8DC !important;
+  box-shadow: 0 4px 16px rgba(93,77,60,0.15) !important;
+  letter-spacing: 0.04em !important;
+  text-shadow: none !important;
+}
+
+body.cafe-light .enter-btn svg,
+body.cafe-dark .enter-btn svg { stroke: #F0E8DC !important; }
+
+body.cafe-light .enter-btn:hover,
+body.cafe-dark .enter-btn:hover {
+  background: #C4A882 !important;
+  border-color: #C4A882 !important;
+  box-shadow: 0 6px 24px rgba(196,168,130,0.3) !important;
+  transform: translateY(-2px) !important;
+}
+
+body.cafe-light .glass-pill,
+body.cafe-dark .glass-pill {
+  background: rgba(255,255,255,0.12) !important;
+  border: 1px solid rgba(208,197,181,0.5) !important;
+  border-radius: 50px !important;
+  box-shadow: 0 2px 12px rgba(93,77,60,0.08) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+body.cafe-light .pill-opt { border-radius: 50px !important; color: #6B5E52 !important; }
+body.cafe-dark .pill-opt { border-radius: 50px !important; color: #B0A898 !important; }
+
+body.cafe-light .pill-opt.active {
+  background: #C4A882 !important; color: #fff !important;
+  box-shadow: none !important; border-radius: 50px !important;
+}
+body.cafe-dark .pill-opt.active {
+  background: #C4A882 !important; color: #fff !important;
+  box-shadow: none !important; border-radius: 50px !important;
+}
+
+body.cafe-light .pill-opt:hover { color: #5C4D3C !important; background: rgba(196,168,130,0.15) !important; }
+body.cafe-dark .pill-opt:hover { color: #E8DFD0 !important; background: rgba(196,168,130,0.15) !important; }
+
+body.cafe-light .theme-label { color: #9A8E82 !important; font-family: 'DM Sans', sans-serif !important; }
+body.cafe-dark .theme-label { color: #7A7068 !important; font-family: 'DM Sans', sans-serif !important; }
+
+body.cafe-light .bottom-group-left .retro-toggle,
+body.cafe-dark .bottom-group-left .retro-toggle {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 0.65rem !important;
+  border-radius: 50px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+body.cafe-light .bottom-group-left .retro-toggle {
+  border: 1.5px solid #D0C5B5 !important;
+  color: #6B5E52 !important;
+}
+body.cafe-dark .bottom-group-left .retro-toggle {
+  border: 1.5px solid #3E372E !important;
+  color: #7A7068 !important;
+}
+body.cafe-light .bottom-group-left .retro-toggle:hover,
+body.cafe-dark .bottom-group-left .retro-toggle:hover {
+  border-color: #C4A882 !important;
+  color: #C4A882 !important;
+  background: rgba(196,168,130,0.1) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ======== JAPANESE QUOTES ======== */
+.jp-quote {
+  margin-top: 0.85rem;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+.jp-quote.visible { opacity: 1; }
+.jp-quote.fading  { opacity: 0; }
+
+.jp-jp {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.9);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+}
+.jp-rom {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: rgba(255,255,255,0.65);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+  margin-top: 0.15rem;
+}
+.jp-src {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.42rem;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 1px;
+  margin-top: 0.25rem;
+}
+
+/* Retro theme overrides */
+body.retro-dark .jp-jp,
+body.retro-light .jp-jp {
+  font-family: 'Space Mono', monospace !important;
+  color: var(--rpixel, #e8f0ff) !important;
+}
+body.retro-dark .jp-rom,
+body.retro-light .jp-rom {
+  font-family: 'Space Mono', monospace !important;
+  color: var(--rdim, #7a8faa) !important;
+  font-style: normal !important;
+}
+body.retro-dark .jp-src,
+body.retro-light .jp-src {
+  color: var(--rdim, #7a8faa) !important;
+}
+
+/* Café theme overrides */
+body.cafe-light .jp-jp,
+body.cafe-dark .jp-jp {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+body.cafe-light .jp-jp  { color: #3D3329 !important; }
+body.cafe-dark .jp-jp   { color: #F0E8DC !important; }
+body.cafe-light .jp-rom { color: #7A6E64 !important; }
+body.cafe-dark .jp-rom  { color: #A09488 !important; }
+body.cafe-light .jp-src { color: #9A8E82 !important; }
+body.cafe-dark .jp-src  { color: #7A7068 !important; }
+
+/* ======== COLLAPSIBLE DROPDOWN NAV (bottom-right) ======== */
+.nav-dropdown-trigger {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 20;
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--paper, #FFFDF8);
+  border: 1px solid #E5E0DA;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.nav-dropdown-trigger svg {
+  width: 20px; height: 20px;
+  fill: none; stroke: var(--text-mid, #475569); stroke-width: 1.8;
+  stroke-linecap: round; pointer-events: none;
+  transition: stroke 0.2s ease;
+}
+.nav-dropdown-trigger:hover {
+  background: var(--pink-soft, #FFE4EE);
+  border-color: var(--pink, #FF6B9D);
+}
+.nav-dropdown-trigger:hover svg { stroke: var(--pink, #FF6B9D); }
+
+.nav-dropdown-panel {
+  position: fixed;
+  bottom: calc(2rem + 44px + 10px);
+  right: 2rem;
+  background: var(--paper, #FFFDF8);
+  border: 1px solid #E5E0DA;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 160px;
+  z-index: 19;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.nav-dropdown-panel.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.nav-dropdown-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-hub, #1E293B);
+  transition: all 0.15s ease;
+  width: 100%;
+  text-align: left;
+  text-decoration: none;
+}
+.nav-dropdown-item svg {
+  width: 18px; height: 18px; flex-shrink: 0;
+  fill: none; stroke: currentColor; stroke-width: 1.8;
+  stroke-linecap: round; stroke-linejoin: round;
+  pointer-events: none;
+}
+.nav-dropdown-item:hover {
+  background: var(--pink-soft, #FFE4EE);
+  color: var(--pink, #FF6B9D);
+}
+
+.nav-dropdown-divider {
+  height: 1px;
+  background: #E5E0DA;
+  margin: 2px 0;
+}
+
+.nav-dropdown-scene-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px;
+  color: var(--text-light, #94A3B8);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 2px 12px 0;
+}
+
+.nav-dropdown-scene-row {
+  display: flex; align-items: center; gap: 2px;
+  padding: 2px 8px 4px;
+}
+
+/* ---- Retro overrides ---- */
+body.retro-dark .nav-dropdown-trigger,
+body.retro-light .nav-dropdown-trigger {
+  background: rgba(13,31,60,0.85) !important;
+  border: 2px solid var(--rborder, #1e3a6e) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+body.retro-dark .nav-dropdown-trigger svg,
+body.retro-light .nav-dropdown-trigger svg { stroke: var(--rpixel, #e8f0ff) !important; }
+body.retro-dark .nav-dropdown-trigger:hover,
+body.retro-light .nav-dropdown-trigger:hover {
+  background: rgba(245,197,24,0.1) !important;
+  border-color: var(--rgold, #f5c518) !important;
+}
+body.retro-dark .nav-dropdown-trigger:hover svg,
+body.retro-light .nav-dropdown-trigger:hover svg { stroke: var(--rgold, #f5c518) !important; }
+
+body.retro-dark .nav-dropdown-panel,
+body.retro-light .nav-dropdown-panel {
+  background: rgba(13,31,60,0.92) !important;
+  border: 2px solid var(--rborder, #1e3a6e) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+body.retro-dark .nav-dropdown-item,
+body.retro-light .nav-dropdown-item {
+  color: var(--rpixel, #e8f0ff) !important;
+  border-radius: 0 !important;
+}
+body.retro-dark .nav-dropdown-item:hover,
+body.retro-light .nav-dropdown-item:hover {
+  background: rgba(245,197,24,0.1) !important;
+  color: var(--rgold, #f5c518) !important;
+}
+body.retro-dark .nav-dropdown-divider,
+body.retro-light .nav-dropdown-divider { background: var(--rborder, #1e3a6e) !important; }
+body.retro-dark .nav-dropdown-scene-label,
+body.retro-light .nav-dropdown-scene-label { color: var(--rdim, #7a8faa) !important; font-family: 'Space Mono', monospace !important; }
+
+/* ---- Café overrides ---- */
+body.cafe-light .nav-dropdown-trigger,
+body.cafe-dark .nav-dropdown-trigger {
+  background: rgba(255,253,247,0.9) !important;
+  border: 1px solid rgba(212,197,169,0.3) !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+body.cafe-light .nav-dropdown-trigger svg { stroke: #6B5344 !important; }
+body.cafe-dark  .nav-dropdown-trigger svg { stroke: #B0A898 !important; }
+body.cafe-light .nav-dropdown-trigger:hover,
+body.cafe-dark  .nav-dropdown-trigger:hover {
+  background: rgba(196,168,130,0.15) !important;
+  border-color: rgba(196,168,130,0.4) !important;
+}
+
+body.cafe-light .nav-dropdown-panel,
+body.cafe-dark  .nav-dropdown-panel {
+  background: rgba(255,253,247,0.95) !important;
+  border: 1px solid rgba(212,197,169,0.3) !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: 0 4px 20px rgba(139,111,71,0.08) !important;
+}
+body.cafe-dark  .nav-dropdown-panel { background: rgba(30,24,18,0.96) !important; }
+body.cafe-light .nav-dropdown-item { color: #6B5344 !important; }
+body.cafe-dark  .nav-dropdown-item { color: #D4C5A9 !important; }
+body.cafe-light .nav-dropdown-item:hover { background: rgba(196,168,130,0.15) !important; color: #5C4D3C !important; }
+body.cafe-dark  .nav-dropdown-item:hover { background: rgba(196,168,130,0.15) !important; color: #E8DFD0 !important; }
+body.cafe-light .nav-dropdown-divider,
+body.cafe-dark  .nav-dropdown-divider { background: rgba(212,197,169,0.3) !important; }
+body.cafe-light .nav-dropdown-scene-label { color: #9A8E82 !important; }
+body.cafe-dark  .nav-dropdown-scene-label { color: #7A7068 !important; }
+
+/* About modal */
+.about-modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  align-items: center; justify-content: center;
+}
+.about-modal-overlay.open { display: flex; }
+.about-modal-box {
+  background: var(--paper, #FFFDF8);
+  border-radius: 12px;
+  padding: 32px 28px;
+  max-width: 340px; width: 90%;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  text-align: center; position: relative;
+}
+.about-modal-close {
+  position: absolute; top: 10px; right: 14px;
+  background: none; border: none; font-size: 20px;
+  cursor: pointer; color: var(--text-light, #94A3B8);
+}
+.about-modal-close:hover { color: var(--pink, #FF6B9D); }
+.about-modal-brand {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px; color: var(--pink, #FF6B9D);
+  letter-spacing: 2px; margin-bottom: 8px;
+}
+.about-modal-title {
+  font-size: 15px; font-weight: 700;
+  color: var(--text-hub, #1E293B); margin-bottom: 6px;
+}
+.about-modal-desc {
+  font-size: 13px; color: var(--text-mid, #475569); line-height: 1.6;
+}
+.about-modal-footer {
+  margin-top: 14px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px; color: var(--text-light, #94A3B8); letter-spacing: 1px;
+}
+body.retro-dark .about-modal-box,
+body.retro-light .about-modal-box {
+  background: var(--rsurface, #0d1b2a) !important;
+  border: 2px solid var(--rborder, #1e3a6e);
+  border-radius: 0 !important;
+}
+body.retro-dark .about-modal-brand,
+body.retro-light .about-modal-brand { color: var(--rgold, #f5c518) !important; }
+body.retro-dark .about-modal-title,
+body.retro-light .about-modal-title { color: var(--rpixel, #e8f0ff) !important; }
+body.retro-dark .about-modal-desc,
+body.retro-light .about-modal-desc  { color: var(--rdim, #7a8faa) !important; }
+body.retro-dark .about-modal-footer,
+body.retro-light .about-modal-footer { color: var(--rdim, #7a8faa) !important; }
+body.cafe-dark .about-modal-box,
+body.cafe-light .about-modal-box {
+  background: rgba(255,253,247,0.95) !important;
+}
+body.cafe-dark .about-modal-box {
+  background: rgba(30,24,18,0.97) !important;
+}
+body.cafe-dark .about-modal-title  { color: #F0E8DC !important; }
+body.cafe-dark .about-modal-desc   { color: #B0A898 !important; }
+body.cafe-dark .about-modal-footer { color: #7A7068 !important; }
+
+.rm-footer {
+  text-align: center;
+  padding: 12px 24px;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+  font-family: 'Kalam', 'Caveat', cursive;
+  margin-top: 20px;
+  color: #475569;
+}
+.rm-footer:hover { opacity: 1; }
+.rm-footer-inner {
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(8px);
+}
+.rm-footer a { color: #FF6B9D; text-decoration: none; }
+.rm-footer a:hover { text-decoration: underline; }
+
+/* Dark mode comfy */
+[data-theme="dark"] .rm-footer { color: rgba(232,224,240,0.6); }
+[data-theme="dark"] .rm-footer-inner { background: rgba(42,36,53,0.6); backdrop-filter: blur(8px); }
+[data-theme="dark"] .rm-footer a { color: var(--pink); }
+
+/* Retro theme */
+body.retro-dark .rm-footer, body.retro-light .rm-footer {
+  color: var(--rdim, #4a6fa5);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+body.retro-dark .rm-footer-inner, body.retro-light .rm-footer-inner {
+  background: rgba(13,31,60,0.7);
+  backdrop-filter: blur(8px);
+  border-radius: 0;
+  border: 1px solid var(--rborder, #1e3a6e);
+}
+body.retro-dark .rm-footer a, body.retro-light .rm-footer a { color: var(--rgold, #f5c518); text-decoration: none; }
+body.retro-dark .rm-footer a:hover, body.retro-light .rm-footer a:hover { text-decoration: underline; }
+
+/* Café theme */
+body.cafe-dark .rm-footer, body.cafe-light .rm-footer {
+  color: #8B7E76;
+  font-family: 'DM Sans', sans-serif;
+}
+body.cafe-dark .rm-footer-inner, body.cafe-light .rm-footer-inner {
+  background: rgba(255,253,247,0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212,197,169,0.3);
+  border-radius: 12px;
+}
+body.cafe-dark .rm-footer a, body.cafe-light .rm-footer a { color: #C17950; text-decoration: none; }
+body.cafe-dark .rm-footer a:hover, body.cafe-light .rm-footer a:hover { text-decoration: underline; }
+
+/* afasta rádio do dropdown */
+#rm-player {
+  bottom: calc(2rem + 44px + 16px) !important; /* acima do botão dropdown */
+  right: 2rem !important;
+}
+
+</style>
+</head>
+<body>
+
+<div class="wallpaper-layer active" id="wallA"></div>
+<div class="wallpaper-layer" id="wallB"></div>
+<div class="bg-overlay"></div>
+<div class="particles-container" id="particles"></div>
+<div class="retro-scanlines"></div>
+<div class="retro-neon-border"></div>
+
+<div class="top-bar">
+  <div class="brand">
+    <div class="brand-name">CODE QUEST</div>
+    <div class="brand-sub">game academy</div>
+  </div>
+  <div class="quote-box" id="quoteBox"></div>
+</div>
+
+<!-- Collapsible dropdown nav (bottom-right) -->
+<div class="nav-dropdown-panel" id="navDropdownPanel">
+  <!-- Nav items -->
+  <a href="index.html#retrolesson" class="nav-dropdown-item" id="navLesson">
+    <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+    Lições
+  </a>
+  <a href="login.html" class="nav-dropdown-item" id="navAuth">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    Entrar
+  </a>
+  <button class="nav-dropdown-item" onclick="alert('Configurações em breve!')">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    Configurações
+  </button>
+  <button class="nav-dropdown-item" id="navAbout" onclick="document.getElementById('aboutModal').classList.add('open')">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    Sobre
+  </button>
+  <!-- Divider -->
+  <div class="nav-dropdown-divider"></div>
+  <!-- Cenário section -->
+  <div class="nav-dropdown-scene-label">CENÁRIO</div>
+  <div class="nav-dropdown-scene-row">
+    <div class="glass-pill" id="scenePill">
+      <button class="pill-opt active" data-sc="auto" title="Auto" onclick="setScene('auto')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </button>
+      <button class="pill-opt" data-sc="day" title="Dia" onclick="setScene('day')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+      </button>
+      <button class="pill-opt" data-sc="sunset" title="Pôr do Sol" onclick="setScene('sunset')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 18a5 5 0 0 0-10 0"/><line x1="12" y1="9" x2="12" y2="2"/><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"/><line x1="1" y1="18" x2="3" y2="18"/><line x1="21" y1="18" x2="23" y2="18"/><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"/><line x1="23" y1="22" x2="1" y2="22"/></svg>
+      </button>
+      <button class="pill-opt" data-sc="night" title="Noite" onclick="setScene('night')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="pill-opt" data-sc="rain" title="Chuva" onclick="setScene('rain')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="16" y1="13" x2="16" y2="21"/><line x1="8" y1="13" x2="8" y2="21"/><line x1="12" y1="15" x2="12" y2="23"/><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Trigger button -->
+<button class="nav-dropdown-trigger" id="navDropdownTrigger" aria-label="Menu" onclick="toggleNavDropdown()">
+  <svg viewBox="0 0 24 24" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+</button>
+
+<!-- About modal -->
+<div id="aboutModal" class="about-modal-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="about-modal-box">
+    <button class="about-modal-close" onclick="document.getElementById('aboutModal').classList.remove('open')">&#215;</button>
+    <div class="about-modal-brand">CODE QUEST</div>
+    <div class="about-modal-title">Code Quest</div>
+    <div class="about-modal-desc">Aprenda a criar seus próprios jogos programando. Missões, recompensas e muita imaginação — tudo numa interface com vibes Ghibli.</div>
+    <div class="about-modal-footer">ADVENTURE EDITION &bull; 2026</div>
+  </div>
+</div>
+
+<div class="landing-container">
+  <div class="greeting" id="greeting"></div>
+  <div id="jpQuote" class="jp-quote">
+    <div class="jp-jp" id="jpJp"></div>
+    <div class="jp-rom" id="jpRom"></div>
+    <div class="jp-src" id="jpSrc"></div>
+  </div>
+  <div class="clock" id="clock"></div>
+  <a href="login.html" class="enter-btn" id="enterBtn">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+    Entrar na Aventura
+  </a>
+</div>
+
+<div class="bottom-bar">
+  <div class="bottom-group-left">
+    <button class="retro-toggle" onclick="toggleRetroMode()">Retro ✨</button>
+    <div class="theme-label">ESTILO</div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   WALLPAPER POOLS — THEME-AWARE BACKGROUND STRATEGY
+   ═══════════════════════════════════════════════════
+   COMFY  → Ghibli landscape wallpapers (verified)
+   CAFÉ   → Cozy library/bookshop interiors (Unsplash)
+   RETRO  → Neon/cyberpunk/retro cityscapes (Unsplash)
+   Each has day/sunset/night/rain variants.
+   ═══════════════════════════════════════════════════ */
+var G = 'https://www.ghibli.jp/gallery/';
+var U = 'https://images.unsplash.com/photo-';
+
+/* --- COMFY: Ghibli landscapes --- */
+var W_COMFY = {
+  day: [
+    G+'laputa036.jpg',       // Laputa floating castle — blue sky, clouds
+    G+'laputa039.jpg',       // Laputa garden ruins from above — green
+    G+'marnie009.jpg',       // Mansion by lake — golden light, trees
+    G+'karigurashi001.jpg',  // Overgrown cottage in garden
+    G+'marnie037.jpg',       // Forest with pond and bridge — lush green
+    G+'howl035.jpg',         // Green hillside with scarecrow — bright day
+    G+'totoro001.jpg',       // Countryside house with garden — sunny day
+    G+'ponyo013.jpg',        // Seaside town — aerial view
+    G+'ponyo006.jpg',        // Coastal island — green and blue
+    G+'majo002.jpg'          // Cottage with garden — bright green
+  ],
+  sunset: [
+    G+'marnie021.jpg',       // Sunset over calm water — pink sky
+    G+'kimitachi044.jpg',    // Stone path over water — golden sunset
+    G+'kimitachi019.jpg',    // Autumn lake with reflections — warm
+    G+'howl011.jpg',         // Moving castle at dusk — mountains
+    G+'howl033.jpg',         // Dramatic clouds — golden sunset sky
+    G+'kimitachi020.jpg',    // Field with towering clouds — golden
+    G+'kimitachi041.jpg',    // Stone memorial — warm golden light
+    G+'marnie009.jpg'        // Lakeside mansion — warm afternoon
+  ],
+  night: [
+    G+'chihiro011.jpg',      // Bathhouse at night — glowing lanterns
+    G+'ponyo038.jpg',        // Full moon over dark ocean
+    G+'mononoke024.jpg',     // Kodama forest — blue night mountains
+    G+'howl011.jpg',         // Moving castle — twilight mountains
+    G+'kimitachi022.jpg',    // Fireworks in night sky — red glow
+    G+'marnie027.jpg',       // Mansion by water at night — moonlight
+    G+'nausicaa001.jpg'      // Fire horizon — dark dramatic sky
+  ],
+  rain: [
+    G+'marnie038.jpg',       // Lightning over dark mansion tower
+    G+'mononoke024.jpg',     // Dark forest with spirits — overcast
+    G+'marnie010.jpg',       // Misty marsh — foggy atmosphere
+    G+'kimitachi046.jpg',    // Giant ocean wave — stormy
+    G+'ponyo011.jpg',        // Stormy ocean — dark waves
+    G+'kazetachinu032.jpg',  // Overcast green countryside
+    G+'marnie037.jpg'        // Dense forest — moody green atmosphere
+  ]
+};
+
+/* --- CAFÉ: Cozy library / bookshop interiors (Unsplash) --- */
+var W_CAFE = {
+  day: [
+    U+'1507842217343-583bb7270b66?w=1920&q=80',  // Warm library shelves, sunlight
+    U+'1521587760476-6c12a4b040da?w=1920&q=80',  // Old bookshop interior
+    U+'1524995997946-a1c2e315a42f?w=1920&q=80',  // Cozy reading nook with books
+    U+'1481627834876-b7833e8f5570?w=1920&q=80',  // Classic library hall
+    U+'1519682337058-a94d519337bc?w=1920&q=80',  // Bookshelf warm wood
+    U+'1512820790803-83ca734da794?w=1920&q=80'   // Cafe interior warm tones
+  ],
+  sunset: [
+    U+'1468581264429-2548ef9eb732?w=1920&q=80',  // Library with golden hour light
+    U+'1526243741027-444d633d7365?w=1920&q=80',  // Warm sunset through library window
+    U+'1495446815901-a7297e633e8d?w=1920&q=80',  // Old books golden light
+    U+'1559339352-11d035aa65de?w=1920&q=80',     // Coffee shop warm evening
+    U+'1506880018603-83d5b814b5a6?w=1920&q=80'   // Cozy warm interior
+  ],
+  night: [
+    U+'1530538095376-a4936b35b5f0?w=1920&q=80',  // Library with lamp light at night
+    U+'1497366216548-37526070297c?w=1920&q=80',  // Dark bookshop with warm lamps
+    U+'1519682577862-22b62b24e493?w=1920&q=80',  // Night study room
+    U+'1532012197267-da84d127e765?w=1920&q=80',  // Dim library atmosphere
+    U+'1558618666-fcd25c85f82e?w=1920&q=80'      // Candle-lit study
+  ],
+  rain: [
+    U+'1515694346937-94d85e39d29b?w=1920&q=80',  // Rain on window
+    U+'1519692933314-fef5c7921ef4?w=1920&q=80',  // Rainy window coffee shop
+    U+'1501436513145-8171d310ca43?w=1920&q=80',  // Moody rainy bookshop
+    U+'1496185106368-308ed53f0c9c?w=1920&q=80',  // Rain drops on glass
+    U+'1428592953211-077101b2021b?w=1920&q=80'   // Overcast atmosphere
+  ]
+};
+
+/* --- RETRO: Neon / cyberpunk / retro cityscapes (Unsplash) --- */
+var W_RETRO = {
+  day: [
+    U+'1550745165-9bc0b252726f?w=1920&q=80',  // Retro arcade machines
+    U+'1511882150382-421056c89033?w=1920&q=80',// Vintage TV static retro
+    U+'1556438064-2d7646166914?w=1920&q=80',  // Retro computer setup
+    U+'1531525645387-7f14be1bdbbd?w=1920&q=80',// Old CRT monitors
+    U+'1558618666-fcd25c85f82e?w=1920&q=80'   // Retro gaming room
+  ],
+  sunset: [
+    U+'1579546929518-9e396f3cc809?w=1920&q=80',// Neon city sunset
+    U+'1534430480872-3498386e7856?w=1920&q=80',// Synthwave sunset sky
+    U+'1514565131-fce0801e5785?w=1920&q=80',  // Purple sunset cityscape
+    U+'1517420704952-d9f39e95b43e?w=1920&q=80',// Urban sunset neon
+    U+'1545127398-14699f92334b?w=1920&q=80'   // Golden hour cyberpunk
+  ],
+  night: [
+    U+'1563089145-599997674d42?w=1920&q=80',  // Neon city at night
+    U+'1519501025264-65ba15a82390?w=1920&q=80',// Tokyo neon streets
+    U+'1533174072545-7a4855d30cb8?w=1920&q=80',// Cyberpunk alley neon
+    U+'1505506364700-93a06f43f5e2?w=1920&q=80',// Neon signs night city
+    U+'1579548122080-c35fd6820ecb?w=1920&q=80',// Dark neon cityscape
+    U+'1542831371-29b0f74f9713?w=1920&q=80'   // Night city lights
+  ],
+  rain: [
+    U+'1501436513145-8171d310ca43?w=1920&q=80',// Neon rain reflections
+    U+'1507400492013-162706c8c05e?w=1920&q=80',// Rainy neon street
+    U+'1476820865390-c52aeebb9891?w=1920&q=80',// Wet city lights
+    U+'1519692933314-fef5c7921ef4?w=1920&q=80',// Rainy window neon glow
+    U+'1515694346937-94d85e39d29b?w=1920&q=80' // Rain on glass
+  ]
+};
+
+/* --- Fallback pools (guaranteed Unsplash photos) --- */
+var FB = {
+  day: [
+    U+'1501785888041-af3ef285b470?w=1920&q=80',
+    U+'1470071459604-3b5ec3a7fe05?w=1920&q=80',
+    U+'1441974231531-c6227db76b6e?w=1920&q=80'
+  ],
+  sunset: [
+    U+'1495616811223-4d98c6e9c869?w=1920&q=80',
+    U+'1506744038136-46273834b3fb?w=1920&q=80'
+  ],
+  night: [
+    U+'1519681393784-d120267933ba?w=1920&q=80',
+    U+'1475274047050-1d0c55b0033b?w=1920&q=80'
+  ],
+  rain: [
+    U+'1515694346937-94d85e39d29b?w=1920&q=80',
+    U+'1428592953211-077101b2021b?w=1920&q=80'
+  ]
+};
+
+/* --- Get the right wallpaper pool for current theme --- */
+function getWallpaperPool() {
+  var theme = localStorage.getItem('rm_theme') || 'comfy';
+  if (theme === 'cafe-dark' || theme === 'cafe-light') return W_CAFE;
+  if (theme === 'retro-dark' || theme === 'retro-light') return W_RETRO;
+  return W_COMFY;
+}
+var W = getWallpaperPool();
+
+/* --- wallpaper state --- */
+var readyPool = { day:[], sunset:[], night:[], rain:[] };
+var validated  = { day:false, sunset:false, night:false, rain:false };
+var wallIdx    = { day:0, sunset:0, night:0, rain:0 };
+var activeLayer = 'A';
+var lastScene   = '';
+var currentScene = localStorage.getItem('landingScene') || 'auto';
+
+/* --- preload & validate each scene's images once --- */
+function validateScene(scene, cb) {
+  if (validated[scene]) return cb(readyPool[scene]);
+  var urls = W[scene], pending = urls.length;
+  urls.forEach(function(url) {
+    var img = new Image();
+    img.onload = function() {
+      if (img.naturalWidth > 100) readyPool[scene].push(url);
+      if (--pending === 0) { validated[scene] = true; cb(readyPool[scene]); }
+    };
+    img.onerror = function() {
+      if (--pending === 0) { validated[scene] = true; cb(readyPool[scene]); }
+    };
+    img.src = url;
+  });
+}
+
+/* --- crossfade between wallA / wallB layers --- */
+function doApply(url, crossfade) {
+  if (crossfade) {
+    var showId = activeLayer === 'A' ? 'wallB' : 'wallA';
+    var hideId = activeLayer === 'A' ? 'wallA' : 'wallB';
+    var show = document.getElementById(showId);
+    var hide = document.getElementById(hideId);
+    show.style.backgroundImage = 'url("' + url + '")';
+    show.offsetHeight;
+    show.classList.add('active');
+    hide.classList.remove('active');
+    activeLayer = activeLayer === 'A' ? 'B' : 'A';
+  } else {
+    var el = document.getElementById('wall' + activeLayer);
+    el.style.backgroundImage = 'url("' + url + '")';
+    el.classList.add('active');
+  }
+}
+
+function showWall(scene, crossfade) {
+  validateScene(scene, function(pool) {
+    if (pool.length === 0) pool = FB[scene];
+    var idx = wallIdx[scene] % pool.length;
+    doApply(pool[idx], crossfade);
+    // preload next
+    var next = pool[(idx + 1) % pool.length];
+    (new Image()).src = next;
+  });
+}
+
+/* --- scene management --- */
+function getAutoScene() {
+  var h = new Date().getHours();
+  if (h >= 6 && h < 17) return 'day';
+  if (h >= 17 && h < 20) return 'sunset';
+  return 'night';
+}
+function resolveScene() {
+  return currentScene === 'auto' ? getAutoScene() : currentScene;
+}
+
+function applyScene(scene, initial) {
+  var actual = scene === 'auto' ? getAutoScene() : scene;
+  if (initial || lastScene !== actual) {
+    showWall(actual, !initial);
+    createParticles(actual);
+    lastScene = actual;
+  }
+  var opts = document.querySelectorAll('#scenePill .pill-opt');
+  for (var i = 0; i < opts.length; i++)
+    opts[i].classList.toggle('active', opts[i].getAttribute('data-sc') === scene);
+}
+
+function setScene(scene) {
+  currentScene = scene;
+  localStorage.setItem('landingScene', scene);
+  var sc = scene === 'auto' ? getAutoScene() : scene;
+  wallIdx[sc] = 0;
+  validated[sc] = false;
+  readyPool[sc] = [];
+  lastScene = '';
+  applyScene(scene, true);
+}
+
+/* --- clock & greeting --- */
+function updateClock() {
+  var now = new Date();
+  var h = String(now.getHours()).padStart(2, '0');
+  var m = String(now.getMinutes()).padStart(2, '0');
+  var el = document.getElementById('clock');
+  if (el) el.textContent = h + ':' + m;
+}
+
+function updateGreeting() {
+  var h = new Date().getHours();
+  var msg = '';
+  if (h >= 5 && h < 12) msg = 'Bom dia';
+  else if (h >= 12 && h < 18) msg = 'Boa tarde';
+  else msg = 'Boa noite';
+  // Try to get user name from localStorage
+  try {
+    var u = JSON.parse(localStorage.getItem('rms_user') || '{}');
+    if (u && u.name) msg += ', ' + u.name.split(' ')[0];
+  } catch(e) {}
+  var el = document.getElementById('greeting');
+  if (el) el.textContent = msg;
+}
+
+/* --- boot & timers --- */
+updateClock();
+updateGreeting();
+applyScene(currentScene, true);
+
+// Update clock every second
+setInterval(updateClock, 1000);
+
+// Update greeting every minute (in case hour changes)
+setInterval(updateGreeting, 60000);
+
+// Cycle wallpaper every 30s
+setInterval(function() {
+  var sc = resolveScene();
+  wallIdx[sc] = (wallIdx[sc] || 0) + 1;
+  showWall(sc, true);
+}, 30000);
+
+// Re-check auto scene every 60s (faster detection of time-of-day change)
+setInterval(function() {
+  if (currentScene === 'auto') applyScene('auto');
+}, 60000);
+
+/* --- Theme change listener: reload wallpapers when theme switches --- */
+var _lastTheme = localStorage.getItem('rm_theme') || 'comfy';
+function checkThemeWallpaperSwitch() {
+  var cur = localStorage.getItem('rm_theme') || 'comfy';
+  if (cur !== _lastTheme) {
+    _lastTheme = cur;
+    W = getWallpaperPool();
+    // Reset validation cache so new pool gets loaded
+    readyPool = { day:[], sunset:[], night:[], rain:[] };
+    validated  = { day:false, sunset:false, night:false, rain:false };
+    wallIdx    = { day:0, sunset:0, night:0, rain:0 };
+    lastScene  = '';
+    applyScene(currentScene, true);
+  }
+}
+// Check every 500ms (catches theme toggle instantly)
+setInterval(checkThemeWallpaperSwitch, 500);
+
+
+var currentParticleScene = '';
+function createParticles(scene) {
+  var c = document.getElementById('particles');
+  if (currentParticleScene === scene) return;
+  currentParticleScene = scene;
+  c.innerHTML = '';
+  var i, p, sz;
+  if (scene === 'day') {
+    // 45 golden dust motes, warm glow
+    for (i = 0; i < 45; i++) {
+      p = document.createElement('div'); p.className = 'particle-dust';
+      p.style.left = Math.random()*100+'%'; p.style.top = Math.random()*100+'%';
+      p.style.setProperty('--dx',(Math.random()*100-50)+'px');
+      p.style.setProperty('--dy',-(50+Math.random()*100)+'px');
+      p.style.animationDuration = (8+Math.random()*12)+'s';
+      p.style.animationDelay = Math.random()*8+'s';
+      sz=(3+Math.random()*3)+'px'; p.style.width=sz; p.style.height=sz;
+      c.appendChild(p);
+    }
+  } else if (scene === 'sunset') {
+    // 30 bright golden fireflies
+    for (i = 0; i < 30; i++) {
+      p = document.createElement('div'); p.className = 'particle-firefly';
+      p.style.left = Math.random()*100+'%'; p.style.top = 20+Math.random()*70+'%';
+      p.style.setProperty('--dx',(Math.random()*80-40)+'px');
+      p.style.setProperty('--dy',-(15+Math.random()*40)+'px');
+      p.style.setProperty('--dx2',(Math.random()*60-30)+'px');
+      p.style.setProperty('--dy2',-(25+Math.random()*50)+'px');
+      p.style.setProperty('--dx3',(Math.random()*70-35)+'px');
+      p.style.setProperty('--dy3',-(5+Math.random()*25)+'px');
+      p.style.animationDuration = (5+Math.random()*7)+'s';
+      p.style.animationDelay = Math.random()*5+'s';
+      sz=(6+Math.random()*4)+'px'; p.style.width=sz; p.style.height=sz;
+      c.appendChild(p);
+    }
+  } else if (scene === 'night') {
+    // 80 stars with varied sizes and colors
+    var starColors = ['#ffffff','#ffffff','#ffffff','#fffde0','#ffe8a0','#d0e8ff'];
+    for (i = 0; i < 80; i++) {
+      p = document.createElement('div'); p.className = 'particle-star';
+      p.style.left = Math.random()*100+'%'; p.style.top = Math.random()*75+'%';
+      // bright stars get larger size
+      var bright = (0.6+Math.random()*0.4).toFixed(2);
+      p.style.setProperty('--bright', bright);
+      p.style.setProperty('--star-color', starColors[Math.floor(Math.random()*starColors.length)]);
+      p.style.animationDuration = (2+Math.random()*4)+'s';
+      p.style.animationDelay = Math.random()*4+'s';
+      // bigger for bright stars
+      var maxSz = bright > 0.85 ? 4 : bright > 0.7 ? 2.5 : 1.5;
+      sz=(1+Math.random()*maxSz)+'px'; p.style.width=sz; p.style.height=sz;
+      c.appendChild(p);
+    }
+    // 4 shooting stars
+    for (i = 0; i < 4; i++) {
+      p = document.createElement('div'); p.className = 'particle-star shooting';
+      p.style.left = (5+Math.random()*60)+'%';
+      p.style.top = (5+Math.random()*40)+'%';
+      var angle = 20+Math.random()*25; // degrees below horizontal
+      var dist = 200+Math.random()*300;
+      p.style.setProperty('--shoot-x', (dist*Math.cos(angle*Math.PI/180)).toFixed(0)+'px');
+      p.style.setProperty('--shoot-y', (dist*Math.sin(angle*Math.PI/180)).toFixed(0)+'px');
+      p.style.animationDuration = (1.2+Math.random()*1.5)+'s';
+      p.style.animationDelay = (3+Math.random()*12)+'s';
+      c.appendChild(p);
+    }
+  } else if (scene === 'rain') {
+    // 120 rain drops, wider and longer
+    for (i = 0; i < 120; i++) {
+      p = document.createElement('div'); p.className = 'particle-rain';
+      p.style.left = Math.random()*100+'%';
+      p.style.height = (15+Math.random()*15)+'px';
+      p.style.animationDuration = (0.35+Math.random()*0.45)+'s';
+      p.style.animationDelay = Math.random()*2+'s';
+      p.style.opacity = (0.2+Math.random()*0.2).toFixed(2);
+      c.appendChild(p);
+    }
+  }
+}
+
+(function() {
+  var token = localStorage.getItem('token');
+  var session = localStorage.getItem('sb-session') || localStorage.getItem('supabase.auth.token');
+  if (token || session) {
+    document.getElementById('enterBtn').href = '/index.html';
+    document.getElementById('enterBtn').innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Abrir Code Quest';
+  }
+})();
+
+/* ============================================================
+   AUTH-AWARE NAV BUTTON
+   ============================================================ */
+(function() {
+  var navAuth = document.getElementById('navAuth');
+  if (!navAuth) return;
+  var isLoggedIn = false;
+  try {
+    var u = JSON.parse(localStorage.getItem('rms_user') || 'null');
+    var token = localStorage.getItem('token');
+    var session = localStorage.getItem('sb-session') || localStorage.getItem('supabase.auth.token');
+    isLoggedIn = !!(u || token || session);
+  } catch(e) {}
+
+  if (isLoggedIn) {
+    navAuth.title = 'Sair';
+    navAuth.href = '#';
+    navAuth.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Sair';
+    navAuth.onclick = function(e) {
+      e.preventDefault();
+      try {
+        localStorage.removeItem('token');
+        localStorage.removeItem('sb-session');
+        localStorage.removeItem('supabase.auth.token');
+        localStorage.removeItem('rms_user');
+      } catch(err) {}
+      window.location.reload();
+    };
+  }
+})();
+
+/* ============================================================
+   JAPANESE QUOTES
+   ============================================================ */
+(function() {
+  // Quotes sourced from anime/gaming/study culture.
+  // src: '' indicates original/generic motivational phrases not attributed to a specific series.
+  var jpQuotes = [
+    { jp: '諦めないでくれよ…俺は本気だ', rom: 'Akiramenaide kure yo... ore wa honki da', src: 'Naruto' },
+    { jp: '人は心にバネを持っている。それは折れたりしない', rom: 'Hito wa kokoro ni bane wo motte iru. Sore wa oretari shinai', src: 'Bleach' },
+    { jp: '俺の剣は折れない。俺の心も折れない', rom: 'Ore no ken wa orenai. Ore no kokoro mo orenai', src: '' },
+    { jp: '過去を惜しむな。未来を恐れるな。今を生きろ', rom: 'Kako wo oshimu na. Mirai wo osoreru na. Ima wo ikiro', src: '' },
+    { jp: '努力した者が全て報われるわけではない。しかし、成功した者は皆すべからく努力している', rom: 'Doryoku shita mono ga subete mukuwareru wake dewa nai. Shikashi, seikou shita mono wa mina subekaraku doryoku shite iru', src: 'HxH' },
+    { jp: '俺は最強だ。なぜなら、俺は俺だからだ', rom: 'Ore wa saikyou da. Naze nara, ore wa ore dakara da', src: '' },
+    { jp: '結果より過程が大事だ', rom: 'Kekka yori katei ga daiji da', src: '' },
+    { jp: '夢を見ることが、始まりだ', rom: 'Yume wo miru koto ga, hajimari da', src: '' },
+    { jp: '一歩一歩、前へ進め', rom: 'Ippo ippo, mae e susume', src: '' },
+    { jp: '敵を知り己を知れば百戦危うからず', rom: 'Teki wo shiri onore wo shireba hyakusen ayaukarazu', src: '' },
+    { jp: 'コードを書くことは、心を書くことだ', rom: 'Koodo wo kaku koto wa, kokoro wo kaku koto da', src: '' },
+    { jp: 'レベルアップまであと少しだ', rom: 'Reberu appu made ato sukoshi da', src: '' },
+    { jp: '集中しろ。今この瞬間だけだ', rom: 'Shuuchuu shiro. Ima kono shunkan dake da', src: '' },
+    { jp: '失敗は成功の母だ', rom: 'Shippai wa seikou no haha da', src: '' },
+    { jp: '信じる力が、世界を変える', rom: 'Shinjiru chikara ga, sekai wo kaeru', src: '' },
+    { jp: '今日も一日、全力で', rom: 'Kyou mo ichinichi, zenryoku de', src: '' },
+    { jp: '論理は美しい。コードも美しくあるべきだ', rom: 'Ronri wa utsukushii. Koodo mo utsukushiku aru beki da', src: '' },
+    { jp: 'どんな闇も、光があれば怖くない', rom: 'Donna yami mo, hikari ga areba kowakunai', src: '' },
+    { jp: '仲間がいるから、強くなれる', rom: 'Nakama ga iru kara, tsuyoku nareru', src: '' },
+    { jp: 'バグは友達。いつか必ず解決する', rom: 'Bagu wa tomodachi. Itsuka kanarazu kaiketsu suru', src: '' },
+  ];
+
+  var container = document.getElementById('jpQuote');
+  var elJp  = document.getElementById('jpJp');
+  var elRom = document.getElementById('jpRom');
+  var elSrc = document.getElementById('jpSrc');
+  if (!container || !elJp) return;
+
+  var currentIdx = Math.floor(Math.random() * jpQuotes.length);
+
+  function showQuote(q) {
+    elJp.textContent  = q.jp;
+    elRom.textContent = q.rom;
+    elSrc.textContent = q.src ? '— ' + q.src : '';
+    elSrc.style.display = q.src ? '' : 'none';
+  }
+
+  function fadeToQuote(idx) {
+    container.classList.remove('visible');
+    container.classList.add('fading');
+    setTimeout(function() {
+      showQuote(jpQuotes[idx]);
+      container.classList.remove('fading');
+      container.classList.add('visible');
+    }, 700);
+  }
+
+  // Initial display
+  showQuote(jpQuotes[currentIdx]);
+  // Trigger visible class slightly after page load to allow other animations to settle first
+  setTimeout(function() { container.classList.add('visible'); }, 950);
+
+  // Rotate every 30 seconds
+  setInterval(function() {
+    currentIdx = (currentIdx + 1) % jpQuotes.length;
+    fadeToQuote(currentIdx);
+  }, 30000);
+})();
+
+/* ============================================================
+   DROPDOWN NAV — toggle & close when clicking outside
+   ============================================================ */
+var _navDropdownPanel = document.getElementById('navDropdownPanel');
+var _navDropdownTrigger = document.getElementById('navDropdownTrigger');
+function toggleNavDropdown() {
+  if (_navDropdownPanel) _navDropdownPanel.classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  if (!_navDropdownPanel || !_navDropdownTrigger) return;
+  if (!_navDropdownPanel.contains(e.target) && !_navDropdownTrigger.contains(e.target)) {
+    _navDropdownPanel.classList.remove('open');
+  }
+});
+</script>
+<script>
+(function(){
+  'use strict';
+  var THEME_KEY = 'rm_theme';
+
+  /* ===== INJECT GOOGLE FONTS (retro) ===== */
+  if (!document.getElementById('rm-retro-fonts')) {
+    var link = document.createElement('link');
+    link.id = 'rm-retro-fonts';
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=VT323&display=swap';
+    document.head.appendChild(link);
+  }
+
+  /* ===== CSS ===== */
+  var css = document.createElement('style');
+  css.id = 'retro-mode-css';
+  css.textContent = ''
+
+  /* ========== RETRO DARK VARIABLES ========== */
+  + 'body.retro-dark {'
+  + '  --rbg:#0d1f3c; --rsurface:#0a1628; --rcard:#112244; --rborder:#1e3a6e;'
+  + '  --rpixel:#e8f0ff; --rdim:#7a8faa; --rpink:#e8477a; --rgold:#f5c518;'
+  + '  --rsky:#7ec8f5; --rgreen:#2ecc71;'
+  + '  --rshadow:rgba(0,0,0,.4); --rscanline:rgba(0,0,0,.04);'
+  + '  --rgold-glow:rgba(245,197,24,.4); --rpink-glow:rgba(232,71,122,.4);'
+  + '}'
+
+  /* ========== RETRO LIGHT VARIABLES ========== */
+  + 'body.retro-light {'
+  + '  --rbg:#f0ebe3; --rsurface:#e6dfd5; --rcard:#fffef7; --rborder:#1e3a6e;'
+  + '  --rpixel:#0d1f3c; --rdim:#5a6a7e; --rpink:#d63a6a; --rgold:#b8860b;'
+  + '  --rsky:#1a5ea8; --rgreen:#1d9e4e;'
+  + '  --rshadow:rgba(30,58,110,.15); --rscanline:rgba(0,0,0,.015);'
+  + '  --rgold-glow:rgba(184,134,11,.25); --rpink-glow:rgba(214,58,106,.25);'
+  + '}'
+
+  /* ========== SHARED RETRO (both dark + light) ========== */
+
+  /* --- NUCLEAR FONT OVERRIDE --- */
+  + 'body.retro-dark *, body.retro-light * {'
+  + '  font-family:"Space Mono",monospace!important;'
+  + '}'
+  + 'body.retro-dark h1:not(#rmLoginOverlay h1), body.retro-dark h2:not(#rmLoginOverlay *),'
+  + 'body.retro-dark h3, body.retro-dark h4, body.retro-dark h5, body.retro-dark h6,'
+  + 'body.retro-light h1:not(#rmLoginOverlay h1), body.retro-light h2:not(#rmLoginOverlay *),'
+  + 'body.retro-light h3, body.retro-light h4, body.retro-light h5, body.retro-light h6 {'
+  + '  font-family:VT323,monospace!important;'
+  + '}'
+
+  /* --- Global bg + color --- */
+  + 'body.retro-dark, body.retro-light {'
+  + '  background:var(--rbg)!important; color:var(--rpixel)!important; }'
+
+  /* --- Scanlines --- */
+  + 'body.retro-dark::after, body.retro-light::after {'
+  + '  content:"";position:fixed;inset:0;pointer-events:none;z-index:99999;'
+  + '  background:repeating-linear-gradient(0deg,transparent,transparent 2px,var(--rscanline) 2px,var(--rscanline) 4px); }'
+
+  /* --- Selection --- */
+  + 'body.retro-dark ::selection, body.retro-light ::selection { background:var(--rgold);color:#000; }'
+
+  /* --- Scrollbar --- */
+  + 'body.retro-dark ::-webkit-scrollbar, body.retro-light ::-webkit-scrollbar { width:6px;height:6px; }'
+  + 'body.retro-dark ::-webkit-scrollbar-track, body.retro-light ::-webkit-scrollbar-track { background:var(--rsurface); }'
+  + 'body.retro-dark ::-webkit-scrollbar-thumb, body.retro-light ::-webkit-scrollbar-thumb { background:var(--rborder); }'
+  + 'body.retro-dark ::-webkit-scrollbar-thumb:hover, body.retro-light ::-webkit-scrollbar-thumb:hover { background:var(--rgold); }'
+
+  /* --- Cards --- */
+  + 'body.retro-dark [class*="card"], body.retro-dark [class*="Card"], body.retro-dark [class*="widget"],'
+  + 'body.retro-dark [class*="panel"]:not(#rmProfilePanel), body.retro-dark [class*="box"]:not(input):not(select),'
+  + 'body.retro-light [class*="card"], body.retro-light [class*="Card"], body.retro-light [class*="widget"],'
+  + 'body.retro-light [class*="panel"]:not(#rmProfilePanel), body.retro-light [class*="box"]:not(input):not(select) {'
+  + '  background:var(--rcard)!important; border:2px solid var(--rborder)!important;'
+  + '  border-radius:0!important; box-shadow:4px 4px 0 var(--rshadow)!important; color:var(--rpixel)!important; }'
+
+  /* --- Header/Nav --- */
+  + 'body.retro-dark header, body.retro-dark [class*="header"]:not(#rmProfilePanel *):not(#rmProfileBar *),'
+  + 'body.retro-dark nav, body.retro-dark [class*="nav"]:not(#rmProfilePanel *),'
+  + 'body.retro-dark [class*="toolbar"], body.retro-dark [class*="topbar"],'
+  + 'body.retro-light header, body.retro-light [class*="header"]:not(#rmProfilePanel *):not(#rmProfileBar *),'
+  + 'body.retro-light nav, body.retro-light [class*="nav"]:not(#rmProfilePanel *),'
+  + 'body.retro-light [class*="toolbar"], body.retro-light [class*="topbar"] {'
+  + '  background:var(--rsurface)!important; border-color:var(--rborder)!important; color:var(--rpixel)!important; }'
+
+  /* --- Backgrounds --- */
+  + 'body.retro-dark main, body.retro-dark [class*="main"], body.retro-dark [class*="content"],'
+  + 'body.retro-dark [class*="wrapper"], body.retro-dark [class*="layout"], body.retro-dark [class*="page"],'
+  + 'body.retro-dark [class*="grid"], body.retro-dark [class*="body"],'
+  + 'body.retro-dark [class*="container"]:not(#rmLoginOverlay):not(#rmLoginOverlay *),'
+  + 'body.retro-dark [class*="section"]:not(#rmProfilePanel *),'
+  + 'body.retro-light main, body.retro-light [class*="main"], body.retro-light [class*="content"],'
+  + 'body.retro-light [class*="wrapper"], body.retro-light [class*="layout"], body.retro-light [class*="page"],'
+  + 'body.retro-light [class*="grid"], body.retro-light [class*="body"],'
+  + 'body.retro-light [class*="container"]:not(#rmLoginOverlay):not(#rmLoginOverlay *),'
+  + 'body.retro-light [class*="section"]:not(#rmProfilePanel *) {'
+  + '  background:transparent!important; color:var(--rpixel)!important; }'
+
+  /* --- Headings style --- */
+  + 'body.retro-dark h1:not(#rmLoginOverlay h1), body.retro-dark h2:not(#rmLoginOverlay *),'
+  + 'body.retro-dark h3, body.retro-dark h4, body.retro-dark h5,'
+  + 'body.retro-light h1:not(#rmLoginOverlay h1), body.retro-light h2:not(#rmLoginOverlay *),'
+  + 'body.retro-light h3, body.retro-light h4, body.retro-light h5 {'
+  + '  color:var(--rgold)!important;'
+  + '  text-shadow:0 0 20px var(--rgold-glow),4px 4px 0 rgba(0,0,0,.08)!important;'
+  + '  letter-spacing:.04em!important; }'
+  + 'body.retro-dark h1:not(#rmLoginOverlay h1), body.retro-light h1:not(#rmLoginOverlay h1) {'
+  + '  animation:rmFlicker 5s infinite!important; }'
+  + '@keyframes rmFlicker{0%,95%,100%{opacity:1}96%{opacity:.7}97%{opacity:1}98%{opacity:.4}99%{opacity:1}}'
+
+  /* --- All text readable --- */
+  + 'body.retro-dark p, body.retro-dark li, body.retro-dark td, body.retro-dark th, body.retro-dark label,'
+  + 'body.retro-dark [class*="desc"], body.retro-dark [class*="sub"], body.retro-dark [class*="info"]:not(#rmProfileBar *),'
+  + 'body.retro-light p, body.retro-light li, body.retro-light td, body.retro-light th, body.retro-light label,'
+  + 'body.retro-light [class*="desc"], body.retro-light [class*="sub"], body.retro-light [class*="info"]:not(#rmProfileBar *) {'
+  + '  color:var(--rpixel)!important; }'
+
+  + 'body.retro-dark [class*="card"] span, body.retro-dark [class*="card"] div,'
+  + 'body.retro-dark main span, body.retro-dark main div,'
+  + 'body.retro-dark [class*="content"] span, body.retro-dark [class*="content"] div,'
+  + 'body.retro-light [class*="card"] span, body.retro-light [class*="card"] div,'
+  + 'body.retro-light main span, body.retro-light main div,'
+  + 'body.retro-light [class*="content"] span, body.retro-light [class*="content"] div {'
+  + '  color:var(--rpixel)!important; }'
+
+  /* --- Dim text --- */
+  + 'body.retro-dark [class*="muted"], body.retro-dark [class*="secondary"], body.retro-dark [class*="gray"],'
+  + 'body.retro-dark [class*="grey"], body.retro-dark [class*="hint"], body.retro-dark [class*="caption"],'
+  + 'body.retro-dark small, body.retro-dark [class*="placeholder"], body.retro-dark [class*="empty"],'
+  + 'body.retro-light [class*="muted"], body.retro-light [class*="secondary"], body.retro-light [class*="gray"],'
+  + 'body.retro-light [class*="grey"], body.retro-light [class*="hint"], body.retro-light [class*="caption"],'
+  + 'body.retro-light small, body.retro-light [class*="placeholder"], body.retro-light [class*="empty"] {'
+  + '  color:var(--rdim)!important; }'
+
+  /* --- Stat numbers (VT323) --- */
+  + 'body.retro-dark [class*="stat"] [class*="val"], body.retro-dark [class*="stat"] [class*="num"],'
+  + 'body.retro-dark [class*="stat"] [class*="count"], body.retro-dark [class*="streak"], body.retro-dark [class*="score"],'
+  + 'body.retro-light [class*="stat"] [class*="val"], body.retro-light [class*="stat"] [class*="num"],'
+  + 'body.retro-light [class*="stat"] [class*="count"], body.retro-light [class*="streak"], body.retro-light [class*="score"] {'
+  + '  font-family:VT323,monospace!important; color:var(--rgold)!important;'
+  + '  text-shadow:0 0 8px var(--rgold-glow)!important; font-size:2rem!important; }'
+
+  /* --- Stat labels --- */
+  + 'body.retro-dark [class*="stat"] [class*="label"], body.retro-dark [class*="stat"] [class*="title"], body.retro-dark [class*="stat"] small,'
+  + 'body.retro-light [class*="stat"] [class*="label"], body.retro-light [class*="stat"] [class*="title"], body.retro-light [class*="stat"] small {'
+  + '  color:var(--rdim)!important; font-size:.6rem!important; letter-spacing:.15em!important; text-transform:uppercase!important; }'
+
+  /* --- Timer (VT323) --- */
+  + 'body.retro-dark [class*="timer"] [class*="display"], body.retro-dark [class*="timer"] [class*="time"],'
+  + 'body.retro-dark [class*="clock"], body.retro-dark [class*="countdown"], body.retro-dark [class*="digit"],'
+  + 'body.retro-light [class*="timer"] [class*="display"], body.retro-light [class*="timer"] [class*="time"],'
+  + 'body.retro-light [class*="clock"], body.retro-light [class*="countdown"], body.retro-light [class*="digit"] {'
+  + '  font-family:VT323,monospace!important; color:var(--rgold)!important;'
+  + '  text-shadow:0 0 30px var(--rgold-glow),0 0 60px rgba(0,0,0,.1)!important; }'
+
+  /* --- Buttons --- */
+  + 'body.retro-dark button:not(#rmLoginOverlay button):not(.rm-tb):not(.rm-bt):not(.pb-btn):not(.pb-logout)'
+  + ':not(.pp-save):not(.pp-logout):not(.pp-close):not(.retro-toggle),'
+  + 'body.retro-dark [type="button"]:not(#rmLoginOverlay *), body.retro-dark [type="submit"]:not(#rmLoginOverlay *),'
+  + 'body.retro-light button:not(#rmLoginOverlay button):not(.rm-tb):not(.rm-bt):not(.pb-btn):not(.pb-logout)'
+  + ':not(.pp-save):not(.pp-logout):not(.pp-close):not(.retro-toggle),'
+  + 'body.retro-light [type="button"]:not(#rmLoginOverlay *), body.retro-light [type="submit"]:not(#rmLoginOverlay *) {'
+  + '  background:var(--rsurface)!important; border:2px solid var(--rborder)!important;'
+  + '  color:var(--rpixel)!important; border-radius:0!important; cursor:pointer!important;'
+  + '  font-weight:700!important; font-size:.7rem!important; letter-spacing:.06em!important; padding:6px 12px!important; }'
+
+  + 'body.retro-dark button:not(#rmLoginOverlay button):not(.rm-tb):not(.rm-bt):not(.pb-btn)'
+  + ':not(.pb-logout):not(.pp-save):not(.pp-logout):not(.pp-close):not(.retro-toggle):hover,'
+  + 'body.retro-light button:not(#rmLoginOverlay button):not(.rm-tb):not(.rm-bt):not(.pb-btn)'
+  + ':not(.pb-logout):not(.pp-save):not(.pp-logout):not(.pp-close):not(.retro-toggle):hover {'
+  + '  border-color:var(--rgold)!important; color:var(--rgold)!important;'
+  + '  box-shadow:0 0 8px var(--rgold-glow),2px 2px 0 var(--rgold)!important; }'
+
+  /* Active buttons */
+  + 'body.retro-dark button.active:not(#rmLoginOverlay button):not(.rm-tb):not(.pb-btn),'
+  + 'body.retro-dark [class*="selected"]:not(#rmLoginOverlay *), body.retro-dark [aria-selected="true"]:not(#rmLoginOverlay *),'
+  + 'body.retro-light button.active:not(#rmLoginOverlay button):not(.rm-tb):not(.pb-btn),'
+  + 'body.retro-light [class*="selected"]:not(#rmLoginOverlay *), body.retro-light [aria-selected="true"]:not(#rmLoginOverlay *) {'
+  + '  background:var(--rgold)!important; color:#000!important; border-color:var(--rgold)!important;'
+  + '  box-shadow:0 0 12px var(--rgold-glow)!important; }'
+
+  /* Danger buttons */
+  + 'body.retro-dark [class*="danger"], body.retro-dark [class*="reset"], body.retro-dark [class*="delete"],'
+  + 'body.retro-light [class*="danger"], body.retro-light [class*="reset"], body.retro-light [class*="delete"] {'
+  + '  border-color:var(--rpink)!important; color:var(--rpink)!important; }'
+
+  /* --- Inputs --- */
+  + 'body.retro-dark input:not(.rm-f):not(.pp-input):not(#rmLoginOverlay input),'
+  + 'body.retro-dark textarea:not(#rmLoginOverlay textarea), body.retro-dark select:not(#rmLoginOverlay select),'
+  + 'body.retro-light input:not(.rm-f):not(.pp-input):not(#rmLoginOverlay input),'
+  + 'body.retro-light textarea:not(#rmLoginOverlay textarea), body.retro-light select:not(#rmLoginOverlay select) {'
+  + '  background:var(--rsurface)!important; border:2px solid var(--rborder)!important;'
+  + '  color:var(--rpixel)!important; border-radius:0!important; caret-color:var(--rgold)!important; font-size:.8rem!important; }'
+  + 'body.retro-dark input:not(#rmLoginOverlay input):focus, body.retro-dark textarea:not(#rmLoginOverlay textarea):focus,'
+  + 'body.retro-light input:not(#rmLoginOverlay input):focus, body.retro-light textarea:not(#rmLoginOverlay textarea):focus {'
+  + '  border-color:var(--rgold)!important; box-shadow:0 0 8px var(--rgold-glow)!important; }'
+  + 'body.retro-dark input::placeholder, body.retro-dark textarea::placeholder,'
+  + 'body.retro-light input::placeholder, body.retro-light textarea::placeholder { color:var(--rdim)!important; }'
+
+  /* --- Checkboxes --- */
+  + 'body.retro-dark input[type="checkbox"], body.retro-light input[type="checkbox"] {'
+  + '  appearance:none!important;-webkit-appearance:none!important;'
+  + '  width:18px!important;height:18px!important; border:2px solid var(--rborder)!important;'
+  + '  background:var(--rsurface)!important; border-radius:0!important; cursor:pointer!important; position:relative!important; }'
+  + 'body.retro-dark input[type="checkbox"]:checked, body.retro-light input[type="checkbox"]:checked {'
+  + '  background:var(--rgold)!important; border-color:var(--rgold)!important; box-shadow:0 0 8px var(--rgold-glow)!important; }'
+  + 'body.retro-dark input[type="checkbox"]:checked::after, body.retro-light input[type="checkbox"]:checked::after {'
+  + '  content:"\\u2713";position:absolute;top:-2px;left:2px;color:#000;font-weight:900;font-size:14px; }'
+
+  /* --- Tags/Badges --- */
+  + 'body.retro-dark [class*="tag"]:not(#rmLoginOverlay *), body.retro-dark [class*="badge"]:not(#rmLoginOverlay *),'
+  + 'body.retro-light [class*="tag"]:not(#rmLoginOverlay *), body.retro-light [class*="badge"]:not(#rmLoginOverlay *) {'
+  + '  background:transparent!important; border:1.5px solid var(--rpink)!important;'
+  + '  color:var(--rpink)!important; border-radius:0!important; font-size:.62rem!important; font-weight:700!important; }'
+
+  /* --- Tabs --- */
+  + 'body.retro-dark [class*="tab"]:not(.rm-tb):not(#rmLoginOverlay *), body.retro-dark [role="tab"],'
+  + 'body.retro-light [class*="tab"]:not(.rm-tb):not(#rmLoginOverlay *), body.retro-light [role="tab"] {'
+  + '  background:var(--rsurface)!important; color:var(--rpixel)!important;'
+  + '  border:2px solid var(--rborder)!important; border-radius:0!important;'
+  + '  font-weight:700!important; font-size:.65rem!important; letter-spacing:.08em!important; padding:5px 10px!important; }'
+  + 'body.retro-dark [class*="tab"].active:not(.rm-tb), body.retro-dark [class*="tab"][class*="active"]:not(.rm-tb),'
+  + 'body.retro-dark [role="tab"][aria-selected="true"],'
+  + 'body.retro-light [class*="tab"].active:not(.rm-tb), body.retro-light [class*="tab"][class*="active"]:not(.rm-tb),'
+  + 'body.retro-light [role="tab"][aria-selected="true"] {'
+  + '  background:var(--rpink)!important; color:#fff!important; border-color:var(--rpink)!important; }'
+
+  /* --- Progress --- */
+  + 'body.retro-dark [class*="progress"], body.retro-dark progress,'
+  + 'body.retro-light [class*="progress"], body.retro-light progress {'
+  + '  background:var(--rsurface)!important; border:2px solid var(--rborder)!important; border-radius:0!important; }'
+  + 'body.retro-dark [class*="progress"] [class*="fill"], body.retro-light [class*="progress"] [class*="fill"] {'
+  + '  background:var(--rgold)!important; box-shadow:0 0 8px var(--rgold-glow)!important; }'
+
+  /* --- Remove notebook paper --- */
+  + 'body.retro-dark [class*="ruled"], body.retro-dark [class*="paper"], body.retro-dark [class*="notebook"], body.retro-dark [class*="lined"],'
+  + 'body.retro-light [class*="ruled"], body.retro-light [class*="paper"], body.retro-light [class*="notebook"], body.retro-light [class*="lined"] {'
+  + '  background-image:none!important; background:var(--rcard)!important; }'
+  + 'body.retro-dark [class*="card"]::before, body.retro-dark [class*="card"]::after,'
+  + 'body.retro-dark [class*="paper"]::before, body.retro-dark [class*="paper"]::after,'
+  + 'body.retro-dark [class*="note"]::before, body.retro-dark [class*="note"]::after,'
+  + 'body.retro-light [class*="card"]::before, body.retro-light [class*="card"]::after,'
+  + 'body.retro-light [class*="paper"]::before, body.retro-light [class*="paper"]::after,'
+  + 'body.retro-light [class*="note"]::before, body.retro-light [class*="note"]::after {'
+  + '  background:none!important; background-image:none!important; border:none!important; display:none!important; }'
+
+  /* --- Links --- */
+  + 'body.retro-dark a:not(#rmLoginOverlay a), body.retro-light a:not(#rmLoginOverlay a) { color:var(--rsky)!important; }'
+  + 'body.retro-dark a:hover, body.retro-light a:hover { color:var(--rgold)!important; }'
+
+  /* --- Dividers --- */
+  + 'body.retro-dark hr, body.retro-dark [class*="divider"], body.retro-dark [class*="separator"],'
+  + 'body.retro-light hr, body.retro-light [class*="divider"], body.retro-light [class*="separator"] {'
+  + '  border-color:var(--rborder)!important; background:var(--rborder)!important; }'
+
+  /* --- Tooltips/Popups --- */
+  + 'body.retro-dark [class*="tooltip"], body.retro-dark [class*="popup"],'
+  + 'body.retro-dark [class*="modal"]:not(#rmLoginOverlay), body.retro-dark [class*="dropdown"],'
+  + 'body.retro-light [class*="tooltip"], body.retro-light [class*="popup"],'
+  + 'body.retro-light [class*="modal"]:not(#rmLoginOverlay), body.retro-light [class*="dropdown"] {'
+  + '  background:var(--rsurface)!important; border:2px solid var(--rborder)!important;'
+  + '  color:var(--rpixel)!important; border-radius:0!important; }'
+
+  /* ========== RETRO TOGGLE BUTTON ========== */
+  + '.retro-toggle { font-family:Inter,sans-serif!important; font-size:.6rem; padding:3px 10px;'
+  + '  border:1.5px solid #f2d6d0; color:#d4726a; background:transparent; cursor:pointer;'
+  + '  font-weight:600; transition:all .2s; border-radius:12px; margin-left:4px; }'
+  + '.retro-toggle:hover { background:#e8477a; color:#fff; border-color:#e8477a; }'
+  + 'body.retro-dark .retro-toggle { border-color:#1e3a6e!important; color:#7a8faa!important;'
+  + '  border-radius:0!important; font-family:"Space Mono",monospace!important; }'
+  + 'body.retro-dark .retro-toggle:hover { background:var(--rgold)!important; color:#000!important; border-color:var(--rgold)!important; }'
+  + 'body.retro-light .retro-toggle { border-color:#1e3a6e!important; color:#1e3a6e!important;'
+  + '  border-radius:0!important; font-family:"Space Mono",monospace!important; }'
+  + 'body.retro-light .retro-toggle:hover { background:var(--rgold)!important; color:#000!important; border-color:var(--rgold)!important; }'
+
+  /* ========== SMOOTH TRANSITIONS ========== */
+  + 'body { transition:background .5s ease,color .5s ease; }'
+  + '[class*="card"],[class*="Card"],header,nav,main,'
+  + 'button,input,textarea,select,[class*="tab"] {'
+  + '  transition:background .3s,color .3s,border-color .3s,box-shadow .3s; }'
+  + '';
+  document.head.appendChild(css);
+
+  /* ===== THEME LOGIC ===== */
+  function getTheme() { return localStorage.getItem(THEME_KEY) || 'comfy'; }
+  function setTheme(t) { localStorage.setItem(THEME_KEY, t); }
+  function isRetro() { var t = getTheme(); return t === 'retro-dark' || t === 'retro-light'; }
+  function isCafe() { var t = getTheme(); return t === 'cafe-dark' || t === 'cafe-light'; }
+
+  function applyTheme(theme) {
+    document.body.classList.remove('retro-dark','retro-light','retro-mode','cafe-dark','cafe-light');
+    if (theme === 'retro-dark') document.body.classList.add('retro-dark');
+    else if (theme === 'retro-light') document.body.classList.add('retro-light');
+    else if (theme === 'cafe-dark') document.body.classList.add('cafe-dark');
+    else if (theme === 'cafe-light') document.body.classList.add('cafe-light');
+    setTheme(theme);
+    updateToggleButtons(theme);
+  }
+
+  function updateToggleButtons(theme) {
+    var isR = (theme === 'retro-dark' || theme === 'retro-light');
+    var isC = (theme === 'cafe-dark' || theme === 'cafe-light');
+    document.querySelectorAll('.retro-toggle').forEach(function(btn) {
+      if (isR) {
+        btn.textContent = 'CAFÉ';
+      } else if (isC) {
+        btn.textContent = 'COMFY';
+      } else {
+        btn.textContent = 'RETRO';
+      }
+    });
+  }
+
+  /* Toggle cycles: comfy → retro-dark → cafe-dark → comfy */
+  window.toggleRetroMode = function(force) {
+    if (typeof force === 'string') { applyTheme(force); return; }
+    var current = getTheme();
+    if (current === 'comfy') {
+      applyTheme('retro-dark');
+    } else if (isRetro()) {
+      /* retro → café (preserve light/dark preference) */
+      var wasDark = (current === 'retro-dark');
+      applyTheme(wasDark ? 'cafe-dark' : 'cafe-light');
+    } else if (isCafe()) {
+      applyTheme('comfy');
+    } else {
+      applyTheme('retro-dark');
+    }
+  };
+
+  /* ===== HOOK EXISTING LIGHT/DARK BUTTONS ===== */
+  function hookThemeButtons() {
+    /* Hook the hub's own theme toggle buttons */
+    var themeToggle = document.getElementById('themeToggle');
+    if (themeToggle && !themeToggle._rmHooked) {
+      themeToggle._rmHooked = true;
+      themeToggle.querySelectorAll('.theme-toggle-opt').forEach(function(opt) {
+        opt.addEventListener('click', function() {
+          var val = opt.getAttribute('data-theme-val');
+          if (isRetro()) {
+            if (val === 'light') applyTheme('retro-light');
+            else if (val === 'dark') applyTheme('retro-dark');
+            /* system: default to retro-dark */
+            else applyTheme('retro-dark');
+          } else if (isCafe()) {
+            if (val === 'light') applyTheme('cafe-light');
+            else if (val === 'dark') applyTheme('cafe-dark');
+            /* system: default to cafe-dark */
+            else applyTheme('cafe-dark');
+          }
+        });
+      });
+    }
+  }
+
+  /* ===== INJECT TOGGLE BUTTON ===== */
+  function injectToggleButton() {
+    /* Try profile bar first */
+    var bar = document.getElementById('rmProfileBar');
+    if (bar && !bar.querySelector('.retro-toggle')) {
+      var btn = document.createElement('button');
+      btn.className = 'retro-toggle';
+      var theme = getTheme();
+      var isR = (theme === 'retro-dark' || theme === 'retro-light');
+      var isC = (theme === 'cafe-dark' || theme === 'cafe-light');
+      btn.textContent = isR ? 'CAFÉ' : (isC ? 'COMFY' : 'RETRO');
+      btn.onclick = function() { window.toggleRetroMode(); };
+      var sairBtn = bar.querySelector('.pb-logout');
+      if (sairBtn) bar.insertBefore(btn, sairBtn);
+      else bar.appendChild(btn);
+      return;
+    }
+    /* Fallback: inject near theme toggle in hub header */
+    var hubHeader = document.querySelector('.hub-header');
+    if (hubHeader && !hubHeader.querySelector('.retro-toggle')) {
+      var btn2 = document.createElement('button');
+      btn2.className = 'retro-toggle';
+      var theme2 = getTheme();
+      var isR2 = (theme2 === 'retro-dark' || theme2 === 'retro-light');
+      var isC2 = (theme2 === 'cafe-dark' || theme2 === 'cafe-light');
+      btn2.textContent = isR2 ? 'CAFÉ' : (isC2 ? 'COMFY' : 'RETRO');
+      btn2.onclick = function() { window.toggleRetroMode(); };
+      var themeToggle = document.getElementById('themeToggle');
+      if (themeToggle) themeToggle.parentNode.insertBefore(btn2, themeToggle.nextSibling);
+      else hubHeader.appendChild(btn2);
+    }
+  }
+
+  /* ===== BOOT ===== */
+  function retroBoot() {
+    var saved = getTheme();
+    if (saved !== 'comfy') applyTheme(saved);
+    injectToggleButton();
+    hookThemeButtons();
+    var observer = new MutationObserver(function() {
+      injectToggleButton();
+      hookThemeButtons();
+    });
+    observer.observe(document.body, { childList:true, subtree:false });
+  }
+
+  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded',function(){setTimeout(retroBoot,300);});
+  else setTimeout(retroBoot,300);
+})();
+
+</script>
+
+<footer class="rm-footer">
+  <span class="rm-footer-inner">
+    feito por Matheus Marques · conheça meu trabalho: <a href="https://mmarques.dev" target="_blank" rel="noopener noreferrer">mmarques.dev</a>
+  </span>
+</footer>
+</body>
+</html>
