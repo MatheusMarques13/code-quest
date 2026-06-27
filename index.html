@@ -313,6 +313,7 @@ renderCoins();
 // Carrega o perfil do aluno logado do Supabase
 async function loadProfile(){
   try{
+    await window.sb.rpc('touch_streak');
     const prof = await window.cqAuth.getProfile();
     if(prof){
       $('#profileName').textContent = prof.display_name || 'aluno';
@@ -354,55 +355,85 @@ document.querySelectorAll('.tm-btn').forEach(b=>b.onclick=()=>{
 function toggleTimer(){
   if(tRun){tRun=false;clearInterval(tInt);$('#tStart').textContent='Iniciar';return;}
   tRun=true;$('#tStart').textContent='Pausar';
-  tInt=setInterval(()=>{if(tLeft>0){tLeft--;renderTimer();}else{clearInterval(tInt);tRun=false;$('#tStart').textContent='Iniciar';$('#timerStatus').textContent='CONCLUÍDO! +20';addCoins(20);}},1000);
+  tInt=setInterval(()=>{if(tLeft>0){tLeft--;renderTimer();}else{clearInterval(tInt);tRun=false;$('#tStart').textContent='Iniciar';$('#timerStatus').textContent='CONCLUÍDO! +20';awardFocus();}},1000);
 }
 function resetTimer(){tRun=false;clearInterval(tInt);tLeft=tMin*60;$('#tStart').textContent='Iniciar';$('#timerStatus').textContent=(tMin<=15?'PAUSA':'MODO FOCO');renderTimer();}
 renderTimer();
 
-let missions=get('cq_missions',[{t:'Terminar o Bosque dos Blocos',d:false},{t:'Criar um sprite do herói',d:false},{t:'Testar meu jogo',d:false}]);
+async function awardFocus(){try{const {data}=await window.sb.rpc('award_focus_coins');if(typeof data==='number'){coins=data;renderCoins();}}catch(e){}}
+
 const checkSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L19 7"/></svg>';
 const xSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+let missions=[];
 function renderMissions(){
   const list=$('#missionList');
   if(!missions.length){list.innerHTML='<div class="goal-empty">Nenhuma missão hoje</div>';}
   else{
-    list.innerHTML=missions.map((m,i)=>`<div class="goal-row ${m.d?'done':''}">
-      <span class="gchk" onclick="toggleMission(${i})">${m.d?checkSvg:''}</span>
-      <span class="glabel" onclick="toggleMission(${i})">${esc(m.t)}</span>
-      <span class="gx" onclick="delMission(${i})">${xSvg}</span></div>`).join('');
+    list.innerHTML=missions.map(m=>`<div class="goal-row ${m.done?'done':''}">
+      <span class="gchk" onclick="toggleMission('${m.id}')">${m.done?checkSvg:''}</span>
+      <span class="glabel" onclick="toggleMission('${m.id}')">${esc(m.text)}</span>
+      <span class="gx" onclick="delMission('${m.id}')">${xSvg}</span></div>`).join('');
   }
-  const done=missions.filter(m=>m.d).length;
+  const done=missions.filter(m=>m.done).length;
   $('#stMissions').textContent=`${done}/${missions.length}`;
-  set('cq_missions',missions);
 }
-function addMission(){const i=$('#missionInput');const v=i.value.trim();if(!v)return;missions.push({t:v,d:false});i.value='';renderMissions();}
-function toggleMission(i){const was=missions[i].d;missions[i].d=!was;if(!was)addCoins(10);renderMissions();}
-function delMission(i){missions.splice(i,1);renderMissions();}
-renderMissions();
+async function loadMissions(){
+  const {data}=await window.sb.from('missions').select('id,text,done').order('created_at');
+  missions=data||[];renderMissions();
+}
+async function addMission(){
+  const i=$('#missionInput');const v=i.value.trim();if(!v)return;i.value='';
+  const {data,error}=await window.sb.from('missions').insert({text:v}).select('id,text,done').single();
+  if(!error&&data){missions.push(data);renderMissions();}
+}
+async function toggleMission(id){
+  const m=missions.find(x=>x.id===id);if(!m)return;
+  const nd=!m.done;m.done=nd;renderMissions();
+  await window.sb.rpc('complete_mission',{p_id:id,p_done:nd});
+  if(nd){const p=await window.cqAuth.getProfile();if(p){coins=p.coins;renderCoins();}}
+}
+async function delMission(id){
+  await window.sb.from('missions').delete().eq('id',id);
+  missions=missions.filter(m=>m.id!==id);renderMissions();
+}
+loadMissions();
 
 const pColors=['var(--postit-yellow)','var(--postit-sky)','var(--postit-pink)','var(--postit-mint)','var(--postit-lilac)','var(--postit-peach)'];
-let projects=get('cq_projects',[
-  {title:'O Gato que Pula',desc:'Faça o gato pular obstáculos.',c:0},
-  {title:'Caça aos Asteroides',desc:'Nave que atira e pontua.',c:1},
-  {title:'Sequências Mágicas',desc:'Puzzle de lógica em passos.',c:4}
-]);
+let projects=[];
 const plusSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
 function renderProjects(){
   const g=$('#projectGrid');
   const rots=['-1.5deg','1deg','-0.5deg','1.5deg','-1deg','0.5deg'];
-  g.innerHTML=projects.map((p,i)=>`<div class="note-card" style="background:${pColors[p.c%pColors.length]};--rot:${rots[i%rots.length]}" onclick="editProject(${i})">
-      <span class="note-card-del" onclick="event.stopPropagation();delProject(${i})">${xSvg}</span>
+  g.innerHTML=projects.map((p,i)=>`<div class="note-card" style="background:${pColors[(p.color||0)%pColors.length]};--rot:${rots[i%rots.length]}" onclick="editProject('${p.id}')">
+      <span class="note-card-del" onclick="event.stopPropagation();delProject('${p.id}')">${xSvg}</span>
       <div class="note-card-title">${esc(p.title)}</div>
-      <div class="note-card-preview">${esc(p.desc||'')}</div>
+      <div class="note-card-preview">${esc(p.description||'')}</div>
       <div class="note-card-date">PROJETO</div></div>`).join('')
     +`<div class="note-add-card" onclick="addProject()">${plusSvg}<small>Novo projeto</small></div>`;
   $('#stProjects').textContent=projects.length;
-  set('cq_projects',projects);
 }
-function addProject(){const t=prompt('Nome do projeto:');if(!t)return;const d=prompt('Descrição (opcional):')||'';projects.push({title:t,desc:d,c:projects.length%pColors.length});renderProjects();}
-function editProject(i){const t=prompt('Editar nome:',projects[i].title);if(t===null)return;projects[i].title=t.trim()||projects[i].title;const d=prompt('Editar descrição:',projects[i].desc||'');if(d!==null)projects[i].desc=d;renderProjects();}
-function delProject(i){if(confirm('Excluir este projeto?')){projects.splice(i,1);renderProjects();}}
-renderProjects();
+async function loadProjects(){
+  const {data}=await window.sb.from('projects').select('id,title,description,color').order('created_at');
+  projects=data||[];renderProjects();
+}
+async function addProject(){
+  const t=prompt('Nome do projeto:');if(!t)return;const d=prompt('Descrição (opcional):')||'';
+  const {data,error}=await window.sb.from('projects').insert({title:t.trim(),description:d,color:projects.length%pColors.length}).select('id,title,description,color').single();
+  if(!error&&data){projects.push(data);renderProjects();}
+}
+async function editProject(id){
+  const p=projects.find(x=>x.id===id);if(!p)return;
+  const t=prompt('Editar nome:',p.title);if(t===null)return;
+  const d=prompt('Editar descrição:',p.description||'');if(d===null)return;
+  await window.sb.from('projects').update({title:t.trim()||p.title,description:d}).eq('id',id);
+  p.title=t.trim()||p.title;p.description=d;renderProjects();
+}
+async function delProject(id){
+  if(!confirm('Excluir este projeto?'))return;
+  await window.sb.from('projects').delete().eq('id',id);
+  projects=projects.filter(x=>x.id!==id);renderProjects();
+}
+loadProjects();
 
 const toolIcon={piskel:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M10 4v16"/>',scratch:'<path d="M9 7l-5 5 5 5M15 7l5 5-5 5"/>',roblox:'<rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9.5" y="9.5" width="5" height="5"/>',magicvoxel:'<path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 12l9-5M12 12v10M12 12L3 7"/>',construct:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>'};
 const checkIc='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L19 7"/></svg>';
