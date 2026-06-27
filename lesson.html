@@ -50,6 +50,9 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 .m-h{font-size:20px;font-weight:700;margin:18px 0 8px}.m-h:first-child{margin-top:0}
 .m-p{font-size:16px;color:var(--text-mid);line-height:1.65;margin-bottom:12px}
 .m-tip{display:flex;gap:9px;align-items:flex-start;background:#FFF9C4;border-radius:9px;padding:11px 13px;margin:12px 0;font-size:15px;color:#7a5a10}
+.m-codewrap{margin:14px 0}
+.m-code-tag{font-family:'Press Start 2P',monospace;font-size:6px;letter-spacing:1px;color:var(--blue-deep);margin-bottom:5px}
+.m-code{font-family:'Space Mono','Courier New',monospace;font-size:13.5px;line-height:1.6;white-space:pre-wrap;background:#0d1f3c;color:#e8f0ff;border-radius:10px;padding:14px 16px;border-left:4px solid var(--pink);overflow-x:auto}
 .m-tip svg{width:19px;height:19px;flex-shrink:0;stroke:#B07D17}
 .m-figure{background:#fff;border:1px solid var(--paper-line);border-radius:10px;padding:14px;text-align:center;display:inline-block;margin:6px 0}
 .m-cap{font-size:13px;color:var(--text-light);margin-top:8px}
@@ -163,6 +166,7 @@ function renderMaterial(mat,intro){
     if(b.t==='h')h+='<div class="m-h">'+esc(b.x)+'</div>';
     else if(b.t==='p')h+='<div class="m-p">'+esc(b.x)+'</div>';
     else if(b.t==='tip')h+='<div class="m-tip">'+tipSvg+'<span>'+esc(b.x)+'</span></div>';
+    else if(b.t==='code')h+='<div class="m-codewrap"><div class="m-code-tag">BLOCOS DO SCRATCH</div><pre class="m-code">'+(b.lines||[]).map(esc).join('\n')+'</pre>'+(b.cap?'<div class="m-cap" style="text-align:left;margin-top:6px">'+esc(b.cap)+'</div>':'')+'</div>';
     else if(b.t==='img'){h+='<div class="m-figure">'+(b.svg||(b.url?'<img src="'+esc(b.url)+'" style="max-width:100%;border-radius:6px">':''))+(b.cap?'<div class="m-cap">'+esc(b.cap)+'</div>':'')+'</div>';}
     else if(b.t==='anim'){h+='<div class="m-figure" style="display:block">'+animBlock()+(b.cap?'<div class="m-cap">'+esc(b.cap)+'</div>':'')+'</div>';}
     else if(b.t==='embed'){
