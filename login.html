@@ -681,6 +681,9 @@ body.cafe-dark .rm-footer a, body.cafe-light .rm-footer a { color: #C17950; text
 body.cafe-dark .rm-footer a:hover, body.cafe-light .rm-footer a:hover { text-decoration: underline; }
 
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/auth.js"></script>
 </head>
 <body>
 
@@ -710,15 +713,6 @@ body.cafe-dark .rm-footer a:hover, body.cafe-light .rm-footer a:hover { text-dec
 
   <div class="card-body">
     <div id="savedUser"></div>
-
-    <div class="tabs">
-      <button class="tab on" id="tabLogin" onclick="switchMode('login')">Entrar</button>
-      <button class="tab" id="tabRegister" onclick="switchMode('register')">Cadastrar</button>
-    </div>
-
-    <div class="field field-name" id="nameField">
-      <input type="text" id="inputName" placeholder="Seu nome" autocomplete="name">
-    </div>
 
     <div class="field">
       <input type="email" id="inputEmail" placeholder="Email" autocomplete="email">
@@ -763,86 +757,39 @@ body.cafe-dark .rm-footer a:hover, body.cafe-light .rm-footer a:hover { text-dec
   }
 })();
 
-/* ===== Saved-user quick login (frontend-only, reads cq_user) ===== */
-(function(){
-  const raw = localStorage.getItem('cq_user');
-  if(raw){
-    try{
-      const u = JSON.parse(raw);
-      const el = document.getElementById('savedUser');
-      if(el && u && u.name){
-        el.innerHTML = `
-          <div class="saved-user" onclick="quickLogin()">
-            <div class="saved-avatar">${u.avatar || '♥'}</div>
-            <div>
-              <div class="saved-name">${u.name}</div>
-              <div class="saved-email">${u.email||''}</div>
-            </div>
-          </div>
-          <div class="saved-or">ou entre com outra conta</div>
-        `;
-      }
-    }catch(e){}
-  }
+/* ===== Se já há sessão ativa, vai direto pro hub ===== */
+(async function(){
+  try{
+    const s = await window.cqAuth.getSession();
+    if(s){ window.location.href = 'index.html'; }
+  }catch(e){}
 })();
 
-function quickLogin(){
-  window.location.href = 'index.html';
-}
-
-let mode = 'login';
-
-function switchMode(m){
-  mode = m;
-  const tl = document.getElementById('tabLogin');
-  const tr = document.getElementById('tabRegister');
-  const nf = document.getElementById('nameField');
-  const btn = document.getElementById('submitBtn');
-  const msg = document.getElementById('msg');
-  if(m==='register'){
-    tl.classList.remove('on'); tr.classList.add('on');
-    nf.classList.add('show');
-    btn.textContent = 'Cadastrar';
-  } else {
-    tl.classList.add('on'); tr.classList.remove('on');
-    nf.classList.remove('show');
-    btn.textContent = 'Entrar';
-  }
-  if(msg) msg.textContent = '';
-}
-
-/* ===== Frontend-only submit: save to localStorage and redirect ===== */
-function doSubmit(){
+/* ===== Login real via Supabase Auth (contas são criadas pelo tutor) ===== */
+async function doSubmit(){
   const btn = document.getElementById('submitBtn');
   const msg = document.getElementById('msg');
   const email = document.getElementById('inputEmail').value.trim();
   const pass = document.getElementById('inputPass').value;
-  const name = document.getElementById('inputName').value.trim();
 
   if(!email || !pass){
     msg.className='msg err'; msg.textContent='Preencha email e senha'; return;
   }
-  if(mode==='register' && !name){
-    msg.className='msg err'; msg.textContent='Preencha seu nome'; return;
-  }
-  if(mode==='register' && pass.length < 6){
-    msg.className='msg err'; msg.textContent='Senha deve ter pelo menos 6 caracteres'; return;
-  }
 
   btn.disabled = true;
+  msg.className='msg info'; msg.textContent='Entrando...';
 
-  // Derive a display name from email when only email is available
-  const finalName = name || (email.split('@')[0] || 'Jogador');
-
-  const user = { name: finalName, email: email, avatar: '♥' };
-  localStorage.setItem('cq_user', JSON.stringify(user));
-  // Compatibility key: store the name string
-  localStorage.setItem('rms_user', finalName);
-
-  msg.className='msg info';
-  msg.textContent = mode==='login' ? '✅ Entrando...' : '✅ Cadastro feito! Entrando...';
-
-  setTimeout(function(){ window.location.href = 'index.html'; }, 400);
+  const { data, error } = await window.cqAuth.signIn(email, pass);
+  if(error){
+    btn.disabled = false;
+    msg.className='msg err';
+    msg.textContent = /invalid login/i.test(error.message) ? 'Email ou senha incorretos' : error.message;
+    return;
+  }
+  const nm = (data.user && data.user.user_metadata && data.user.user_metadata.display_name) || email.split('@')[0];
+  try{ localStorage.setItem('cq_user', JSON.stringify({name:nm, email:email, avatar:'♥'})); }catch(e){}
+  msg.className='msg info'; msg.textContent='✅ Entrando...';
+  window.location.href = 'index.html';
 }
 
 document.getElementById('inputPass').addEventListener('keydown',function(e){ if(e.key==='Enter') doSubmit(); });

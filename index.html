@@ -181,6 +181,10 @@ body.retro-dark .goal-row.done .gchk,body.retro-light .goal-row.done .gchk{backg
 body.retro-dark .fc-ic,body.retro-light .fc-ic{background:transparent!important;border:1.5px solid var(--rborder)!important;color:var(--rsky)!important;border-radius:0!important}
 body.retro-dark .reward,body.retro-light .reward{background:transparent!important;border:1.5px solid var(--rgold)!important;color:var(--rgold)!important;border-radius:0!important}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/auth-guard.js"></script>
 </head>
 <body>
 <div id="hub">
@@ -299,20 +303,30 @@ const set=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
 (function(){
-  const u=get('cq_user',null);
-  $('#profileName').textContent=(u&&u.name)?u.name:'aluno';
   const d=new Date();
   const dias=['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
   const meses=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
   $('#dateTxt').textContent=`${dias[d.getDay()]}, ${d.getDate()} ${meses[d.getMonth()]} ${d.getFullYear()}`;
 })();
-function logout(){localStorage.removeItem('cq_user');location.href='login.html';}
+async function logout(){ await window.cqAuth.signOut(); localStorage.removeItem('cq_user'); location.href='login.html'; }
 
-let coins=get('cq_coins',240);
+// Moedas (Fase 1: exibe valor do banco; persistência server-side entra na Fase 2)
+let coins=0;
 function renderCoins(){$('#stCoins').textContent=coins;}
-function addCoins(n){coins+=n;set('cq_coins',coins);renderCoins();}
+function addCoins(n){coins+=n;renderCoins();}
 renderCoins();
-$('#stStreak').textContent=get('cq_streak',4);
+// Carrega o perfil do aluno logado do Supabase
+async function loadProfile(){
+  try{
+    const prof = await window.cqAuth.getProfile();
+    if(prof){
+      $('#profileName').textContent = prof.display_name || 'aluno';
+      coins = prof.coins || 0; renderCoins();
+      $('#stStreak').textContent = prof.streak || 0;
+    }
+  }catch(e){ console.warn('perfil', e); }
+}
+loadProfile();
 
 const tt=$('#themeToggle');
 let retroOn=get('cq_retro',false);
