@@ -166,7 +166,7 @@ function renderMaterial(mat,intro){
     if(b.t==='h')h+='<div class="m-h">'+esc(b.x)+'</div>';
     else if(b.t==='p')h+='<div class="m-p">'+esc(b.x)+'</div>';
     else if(b.t==='tip')h+='<div class="m-tip">'+tipSvg+'<span>'+esc(b.x)+'</span></div>';
-    else if(b.t==='code')h+='<div class="m-codewrap"><div class="m-code-tag">BLOCOS DO SCRATCH</div><pre class="m-code">'+(b.lines||[]).map(esc).join('\n')+'</pre>'+(b.cap?'<div class="m-cap" style="text-align:left;margin-top:6px">'+esc(b.cap)+'</div>':'')+'</div>';
+    else if(b.t==='code')h+='<div class="m-codewrap"><div class="m-code-tag">'+esc(b.lang||'BLOCOS DO SCRATCH')+'</div><pre class="m-code">'+(b.lines||[]).map(esc).join('\n')+'</pre>'+(b.cap?'<div class="m-cap" style="text-align:left;margin-top:6px">'+esc(b.cap)+'</div>':'')+'</div>';
     else if(b.t==='img'){h+='<div class="m-figure">'+(b.svg||(b.url?'<img src="'+esc(b.url)+'" style="max-width:100%;border-radius:6px">':''))+(b.cap?'<div class="m-cap">'+esc(b.cap)+'</div>':'')+'</div>';}
     else if(b.t==='anim'){h+='<div class="m-figure" style="display:block">'+animBlock()+(b.cap?'<div class="m-cap">'+esc(b.cap)+'</div>':'')+'</div>';}
     else if(b.t==='embed'){
