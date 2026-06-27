@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code Quest — Painel do Professor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Caveat:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/auth-guard.js"></script>
+<style>
+:root{--paper:#FFFDF8;--paper-line:#E8E4DF;--pink:#FF6B9D;--pink-soft:#FFE4EE;--pink-hover:#FF4F88;--blue:#6DBDE8;--blue-soft:#E3F2FD;--blue-deep:#4A9BC7;--mint:#A7F3D0;--mint-soft:#ECFDF5;--gold:#E0A93C;--gold-soft:#FFF3D6;--lavender-soft:#F0ECFF;--text:#1E293B;--text-mid:#475569;--text-light:#94A3B8;--radius:8px;--shadow:0 1px 3px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.04)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Kalam','Caveat',cursive;font-size:16px;color:var(--text);min-height:100vh;background:linear-gradient(165deg,#F5E6D3,#E8D0B3 50%,#F0E2D0);background-attachment:fixed}
+.pixel{font-family:'Press Start 2P',monospace}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 20px 60px}
+.head{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.head h1{font-size:24px;font-weight:700;flex:1}
+.tbtn{font-family:'Kalam','Caveat',cursive;font-size:15px;font-weight:600;border:1px solid #E5E0DA;background:rgba(255,255,255,.85);color:var(--text-mid);padding:8px 14px;border-radius:12px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.tbtn:hover{border-color:var(--pink);color:var(--pink)}
+.card{background:var(--paper);border:1px solid #E5E0DA;border-left:3px solid rgba(139,90,43,.14);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:18px}
+.card h2{font-size:20px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.card .sub{font-size:14px;color:var(--text-light);margin-bottom:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+label{font-size:14px;color:var(--text-mid);display:block;margin:8px 0 3px}
+input,select,textarea{font-family:'Kalam','Caveat',cursive;font-size:15px;padding:9px 12px;border:1px solid var(--paper-line);border-radius:8px;background:#fff;color:var(--text);outline:none;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(109,189,232,.15)}
+textarea{resize:vertical;line-height:1.5}
+.btn{font-family:'Kalam','Caveat',cursive;font-size:16px;font-weight:700;border:none;border-radius:9px;padding:10px 18px;cursor:pointer;transition:transform .12s}
+.btn:hover{transform:translateY(-1px)}
+.btn-pink{background:var(--pink-soft);color:var(--pink-hover)}
+.btn-blue{background:var(--blue-soft);color:var(--blue-deep)}
+.btn-mint{background:var(--mint-soft);color:#059669}
+.btn-ghost{background:transparent;border:1px dashed var(--paper-line);color:var(--text-light)}
+.btn-sm{font-size:14px;padding:6px 12px}
+.stud{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px dashed var(--paper-line)}
+.stud:last-child{border-bottom:none}
+.stud .av{width:38px;height:38px;border-radius:50%;background:var(--pink-soft);display:flex;align-items:center;justify-content:center;color:var(--pink);font-size:18px;flex-shrink:0}
+.stud .info{flex:1;min-width:0}
+.stud .info b{font-weight:700}
+.stud .info small{display:block;color:var(--text-light);font-size:13px}
+.badge{font-family:'Press Start 2P',monospace;font-size:7px;padding:5px 8px;border-radius:5px;background:var(--gold-soft);color:#B07D17}
+.mod{border:1px solid var(--paper-line);border-radius:9px;padding:12px 14px;margin-bottom:12px;background:rgba(255,255,255,.5)}
+.mod-h{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.mod-h b{flex:1;font-size:17px}
+.les{display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px dashed var(--paper-line);font-size:15px}
+.les .lt{flex:1}
+.msg{font-size:14px;min-height:20px;margin-top:8px}
+.msg.err{color:var(--pink)}.msg.ok{color:#059669}
+.hidden{display:none}
+.editor label{margin-top:10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hint{font-size:12px;color:var(--text-light);margin-top:2px}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <div id="denied" class="hidden card" style="text-align:center;padding:40px">
+    <h2 style="justify-content:center">Acesso restrito</h2>
+    <p class="sub" style="margin:8px 0 16px">Esta página é só para professores.</p>
+    <a class="btn btn-pink" href="index.html">Voltar ao hub</a>
+  </div>
+
+  <div id="panel" class="hidden">
+    <div class="head">
+      <h1>Painel do Professor</h1>
+      <a class="tbtn" href="index.html">Hub</a>
+      <button class="tbtn" onclick="sair()">Sair</button>
+    </div>
+
+    <div class="card">
+      <h2>Alunos</h2>
+      <div class="sub">Crie contas e acompanhe o progresso.</div>
+      <div id="studList"></div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px dashed var(--paper-line)">
+        <b style="font-size:16px">Novo aluno</b>
+        <div class="grid2" style="margin-top:6px">
+          <div><label>Nome</label><input id="sName" placeholder="Nome do aluno"></div>
+          <div><label>Email</label><input id="sEmail" type="email" placeholder="aluno@exemplo.com"></div>
+        </div>
+        <label>Senha provisória (mín. 6)</label><input id="sPass" placeholder="senha que o aluno vai usar">
+        <div class="row" style="margin-top:12px"><button class="btn btn-pink" onclick="criarAluno()">Criar aluno</button></div>
+        <div class="msg" id="sMsg"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Currículo</h2>
+      <div class="sub">Módulos e aulas. As aulas usam o formato Material / Recursos / Desafio / Inglês.</div>
+      <div id="modList"></div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn btn-blue btn-sm" onclick="novoModulo()">+ Novo módulo</button>
+        <button class="btn btn-mint btn-sm" onclick="novaAula()">+ Nova aula</button>
+      </div>
+      <div class="msg" id="cMsg"></div>
+    </div>
+
+    <div class="card editor hidden" id="modEditor">
+      <h2 id="modEdTitle">Módulo</h2>
+      <div class="grid2">
+        <div><label>Título</label><input id="mTitle" placeholder="Ex: Piskel + Scratch"></div>
+        <div><label>Ferramenta principal</label><select id="mTool"></select></div>
+      </div>
+      <label>Descrição</label><input id="mDesc" placeholder="Sobre o que é o módulo">
+      <div class="grid2"><div><label>Ordem</label><input id="mPos" type="number" value="1"></div><div><label>Publicado</label><select id="mPub"><option value="true">Sim</option><option value="false">Não</option></select></div></div>
+      <div class="row" style="margin-top:14px"><button class="btn btn-mint" onclick="salvarModulo()">Salvar módulo</button><button class="btn btn-ghost" onclick="fecharEditores()">Cancelar</button></div>
+    </div>
+
+    <div class="card editor hidden" id="lesEditor">
+      <h2 id="lesEdTitle">Aula</h2>
+      <div class="grid2">
+        <div><label>Módulo</label><select id="lMod"></select></div>
+        <div><label>Ferramenta</label><select id="lTool"></select></div>
+      </div>
+      <div class="grid2">
+        <div><label>Título</label><input id="lTitle" placeholder="Ex: Aula 1 — Meu primeiro sprite"></div>
+        <div><label>Descrição curta</label><input id="lDesc" placeholder="resumo da aula"></div>
+      </div>
+      <div class="grid2">
+        <div><label>Recompensa (moedas)</label><input id="lReward" type="number" value="20"></div>
+        <div><label>Ordem</label><input id="lPos" type="number" value="1"></div>
+      </div>
+      <label>Introdução</label><textarea id="lIntro" rows="2" placeholder="Uma frase animando o aluno pra aula"></textarea>
+      <label>Material</label><textarea id="lMaterial" rows="6" placeholder="Escreva o conteúdo. Use uma linha em branco entre parágrafos.&#10;# Vira um título&#10;> Vira uma dica"></textarea>
+      <div class="hint"># no começo da linha = título · &gt; = dica · linha em branco separa parágrafos</div>
+      <div class="grid2">
+        <div><label>Imagem (URL, opcional)</label><input id="lImg" placeholder="https://..."></div>
+        <div><label>Vídeo (YouTube/TikTok/Insta, opcional)</label><input id="lVideo" placeholder="cole o link"></div>
+      </div>
+      <label style="display:flex;align-items:center;gap:8px;margin-top:10px"><input type="checkbox" id="lAnim" style="width:auto"> incluir animação explicativa</label>
+      <label>Recursos (um por linha)</label><textarea id="lRes" rows="3" placeholder="Abrir o Piskel | https://piskelapp.com | desenhar&#10;Abrir o Scratch | https://scratch.mit.edu | programar"></textarea>
+      <div class="hint">formato: rótulo | link | observação</div>
+      <label>Desafio</label><textarea id="lChal" rows="2" placeholder="O que o aluno faz sozinho"></textarea>
+      <label>Passos do desafio (um por linha)</label><textarea id="lSteps" rows="3" placeholder="Abra o Piskel&#10;Desenhe o personagem&#10;Exporte como PNG"></textarea>
+      <label>Inglês (um par por linha: inglês = português)</label><textarea id="lEng" rows="3" placeholder="cat = gato&#10;color = cor&#10;export = exportar"></textarea>
+      <div class="row" style="margin-top:14px"><button class="btn btn-mint" onclick="salvarAula()">Salvar aula</button><button class="btn btn-ghost" onclick="fecharEditores()">Cancelar</button></div>
+      <div class="msg" id="lMsg"></div>
+    </div>
+  </div>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+const SUPABASE_URL='https://pqytpynhhknigmncgufx.supabase.co';
+const ANON='sb_publishable_9oL2aAxCVW3AtGmV1SnhnQ_2e7NP6tC';
+const TOOLS=['scratch','piskel','magicvoxel','roblox','construct'];
+function toolOpts(sel){return TOOLS.map(t=>`<option value="${t}" ${t===sel?'selected':''}>${t}</option>`).join('');}
+
+let MODULES=[], EDIT_MOD=null, EDIT_LES=null;
+
+(function(){
+  function isDark(t){return t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme:dark)').matches);}
+  let t='light';try{t=JSON.parse(localStorage.getItem('cq_theme'))||'light';}catch(e){}
+  if(isDark(t))document.documentElement.setAttribute('data-theme','dark');
+})();
+
+async function boot(){
+  const prof=await window.cqAuth.getProfile();
+  if(!prof||prof.role!=='tutor'){$('#denied').classList.remove('hidden');return;}
+  $('#panel').classList.remove('hidden');
+  $('#mTool').innerHTML=toolOpts('piskel');
+  $('#lTool').innerHTML=toolOpts('scratch');
+  await loadStudents();
+  await loadCurriculo();
+}
+
+async function loadStudents(){
+  const {data:studs}=await window.sb.from('profiles').select('id,display_name,email,coins,streak').eq('role','student').order('display_name');
+  const {data:prog}=await window.sb.from('lesson_progress').select('student_id,status');
+  const doneBy={};(prog||[]).filter(p=>p.status==='completed').forEach(p=>{doneBy[p.student_id]=(doneBy[p.student_id]||0)+1;});
+  const el=$('#studList');
+  if(!studs||!studs.length){el.innerHTML='<div class="sub">Nenhum aluno ainda.</div>';return;}
+  el.innerHTML=studs.map(s=>`<div class="stud"><div class="av">${(s.display_name||'?').charAt(0).toUpperCase()}</div>
+    <div class="info"><b>${esc(s.display_name||'(sem nome)')}</b><small>${esc(s.email||'')}</small></div>
+    <span class="badge">${s.coins||0} moedas</span>
+    <span class="badge" style="background:var(--blue-soft);color:var(--blue-deep)">${doneBy[s.id]||0} aulas</span></div>`).join('');
+}
+
+async function criarAluno(){
+  const name=$('#sName').value.trim(), email=$('#sEmail').value.trim(), pass=$('#sPass').value, msg=$('#sMsg');
+  if(!name||!email||pass.length<6){msg.className='msg err';msg.textContent='Preencha nome, email e senha (mín. 6).';return;}
+  msg.className='msg';msg.textContent='Criando...';
+  const sess=await window.cqAuth.getSession();
+  try{
+    const r=await fetch(SUPABASE_URL+'/functions/v1/admin-create-student',{method:'POST',headers:{'apikey':ANON,'Authorization':'Bearer '+sess.access_token,'Content-Type':'application/json'},body:JSON.stringify({email,password:pass,display_name:name,role:'student'})});
+    const j=await r.json();
+    if(!r.ok||j.error){msg.className='msg err';msg.textContent=j.error||'Erro ao criar.';return;}
+    msg.className='msg ok';msg.textContent='Aluno criado! Senha: '+pass;
+    $('#sName').value='';$('#sEmail').value='';$('#sPass').value='';
+    await loadStudents();
+  }catch(e){msg.className='msg err';msg.textContent='Erro: '+e.message;}
+}
+
+async function loadCurriculo(){
+  const {data}=await window.sb.from('modules').select('id,title,description,tool,position,is_published,lessons(id,title,tool,position,reward_coins,is_published)').order('position');
+  MODULES=data||[];MODULES.forEach(m=>(m.lessons||[]).sort((a,b)=>a.position-b.position));
+  const el=$('#modList');
+  if(!MODULES.length){el.innerHTML='<div class="sub">Nenhum módulo ainda. Crie o primeiro!</div>';return;}
+  el.innerHTML=MODULES.map(m=>`<div class="mod"><div class="mod-h"><b>${esc(m.title)}</b>
+    <span class="badge">${esc(m.tool||'')}</span>${m.is_published?'':'<span class="badge" style="background:var(--paper-line);color:var(--text-mid)">rascunho</span>'}
+    <button class="btn btn-blue btn-sm" onclick="editarModulo('${m.id}')">editar</button>
+    <button class="btn btn-ghost btn-sm" onclick="excluirModulo('${m.id}')">excluir</button></div>
+    ${(m.lessons||[]).map(l=>`<div class="les"><span class="lt">${esc(l.title)} ${l.is_published?'':'<small style=\"color:var(--text-light)\">(rascunho)</small>'}</span>
+      <span class="badge">+${l.reward_coins}</span>
+      <button class="btn btn-blue btn-sm" onclick="editarAula('${l.id}')">editar</button>
+      <button class="btn btn-ghost btn-sm" onclick="excluirAula('${l.id}')">excluir</button></div>`).join('')||'<div class="les"><span class="lt sub">sem aulas</span></div>'}
+    </div>`).join('');
+}
+
+function fecharEditores(){$('#modEditor').classList.add('hidden');$('#lesEditor').classList.add('hidden');EDIT_MOD=null;EDIT_LES=null;}
+function novoModulo(){EDIT_MOD=null;$('#modEdTitle').textContent='Novo módulo';$('#mTitle').value='';$('#mDesc').value='';$('#mTool').value='piskel';$('#mPos').value=(MODULES.length+1);$('#mPub').value='true';$('#lesEditor').classList.add('hidden');$('#modEditor').classList.remove('hidden');$('#modEditor').scrollIntoView({behavior:'smooth'});}
+function editarModulo(id){const m=MODULES.find(x=>x.id===id);if(!m)return;EDIT_MOD=id;$('#modEdTitle').textContent='Editar módulo';$('#mTitle').value=m.title;$('#mDesc').value=m.description||'';$('#mTool').value=m.tool||'piskel';$('#mPos').value=m.position;$('#mPub').value=String(m.is_published);$('#lesEditor').classList.add('hidden');$('#modEditor').classList.remove('hidden');$('#modEditor').scrollIntoView({behavior:'smooth'});}
+async function salvarModulo(){
+  const payload={title:$('#mTitle').value.trim(),description:$('#mDesc').value.trim(),tool:$('#mTool').value,position:+$('#mPos').value,is_published:$('#mPub').value==='true'};
+  if(!payload.title){$('#cMsg').className='msg err';$('#cMsg').textContent='Dê um título ao módulo.';return;}
+  let err;
+  if(EDIT_MOD){({error:err}=await window.sb.from('modules').update(payload).eq('id',EDIT_MOD));}
+  else{({error:err}=await window.sb.from('modules').insert(payload));}
+  if(err){$('#cMsg').className='msg err';$('#cMsg').textContent=err.message;return;}
+  fecharEditores();$('#cMsg').className='msg ok';$('#cMsg').textContent='Módulo salvo.';await loadCurriculo();
+}
+async function excluirModulo(id){if(!confirm('Excluir o módulo e TODAS as aulas dele?'))return;const {error}=await window.sb.from('modules').delete().eq('id',id);if(error){$('#cMsg').className='msg err';$('#cMsg').textContent=error.message;return;}await loadCurriculo();}
+
+function novaAula(){
+  EDIT_LES=null;$('#lesEdTitle').textContent='Nova aula';
+  $('#lMod').innerHTML=MODULES.map(m=>`<option value="${m.id}">${esc(m.title)}</option>`).join('');
+  $('#lTool').innerHTML=toolOpts('scratch');
+  ['lTitle','lDesc','lIntro','lMaterial','lImg','lVideo','lRes','lChal','lSteps','lEng'].forEach(id=>$('#'+id).value='');
+  $('#lReward').value=20;$('#lPos').value=1;$('#lAnim').checked=false;$('#lMsg').textContent='';
+  $('#modEditor').classList.add('hidden');$('#lesEditor').classList.remove('hidden');$('#lesEditor').scrollIntoView({behavior:'smooth'});
+}
+async function editarAula(id){
+  const {data:l}=await window.sb.from('lessons').select('*').eq('id',id).single();
+  if(!l)return;EDIT_LES=id;$('#lesEdTitle').textContent='Editar aula';
+  $('#lMod').innerHTML=MODULES.map(m=>`<option value="${m.id}" ${m.id===l.module_id?'selected':''}>${esc(m.title)}</option>`).join('');
+  $('#lTool').innerHTML=toolOpts(l.tool||'scratch');
+  $('#lTitle').value=l.title||'';$('#lDesc').value=l.description||'';$('#lReward').value=l.reward_coins||20;$('#lPos').value=l.position||1;
+  const b=l.body||{};
+  $('#lIntro').value=b.intro||'';
+  const mat=[],img={v:''},vid={v:''},anim={v:false};
+  (b.material||[]).forEach(blk=>{
+    if(blk.t==='h')mat.push('# '+blk.x);
+    else if(blk.t==='tip')mat.push('> '+blk.x);
+    else if(blk.t==='p')mat.push(blk.x);
+    else if(blk.t==='img'&&blk.url)img.v=blk.url;
+    else if(blk.t==='embed'&&blk.url)vid.v=blk.url;
+    else if(blk.t==='anim')anim.v=true;
+  });
+  $('#lMaterial').value=mat.join('\n\n');$('#lImg').value=img.v;$('#lVideo').value=vid.v;$('#lAnim').checked=anim.v;
+  $('#lRes').value=(b.resources||[]).map(r=>[r.label,r.url,r.note].filter(Boolean).join(' | ')).join('\n');
+  $('#lChal').value=(b.challenge&&b.challenge.x)||'';
+  $('#lSteps').value=((b.challenge&&b.challenge.steps)||[]).join('\n');
+  $('#lEng').value=((b.english&&b.english.pairs)||[]).map(p=>p[0]+' = '+p[1]).join('\n');
+  $('#lMsg').textContent='';
+  $('#modEditor').classList.add('hidden');$('#lesEditor').classList.remove('hidden');$('#lesEditor').scrollIntoView({behavior:'smooth'});
+}
+function guessKind(url){url=(url||'').toLowerCase();if(url.includes('piskel'))return 'piskel';if(url.includes('scratch'))return 'scratch';if(/\.(png|jpg|jpeg|gif|webp)|image|gallery|explore/.test(url))return 'image';return 'link';}
+function buildBody(){
+  const material=[];
+  ($('#lMaterial').value||'').split(/\n\s*\n/).forEach(ch=>{ch=ch.trim();if(!ch)return;
+    if(ch.startsWith('# '))material.push({t:'h',x:ch.slice(2).trim()});
+    else if(ch.startsWith('> '))material.push({t:'tip',x:ch.slice(2).trim()});
+    else material.push({t:'p',x:ch});});
+  if($('#lAnim').checked)material.push({t:'anim',cap:'Animação explicativa'});
+  if($('#lImg').value.trim())material.push({t:'img',url:$('#lImg').value.trim(),cap:''});
+  if($('#lVideo').value.trim())material.push({t:'embed',url:$('#lVideo').value.trim(),cap:''});
+  const resources=($('#lRes').value||'').split('\n').map(l=>l.trim()).filter(Boolean).map(l=>{const a=l.split('|').map(s=>s.trim());return {label:a[0]||'Link',url:a[1]||'',note:a[2]||'',kind:guessKind(a[1])};});
+  const challenge={x:$('#lChal').value.trim(),steps:($('#lSteps').value||'').split('\n').map(s=>s.trim()).filter(Boolean)};
+  const english={pairs:($('#lEng').value||'').split('\n').map(l=>l.split('=').map(s=>s.trim())).filter(a=>a.length===2&&a[0]&&a[1])};
+  const intro=$('#lIntro').value.trim();
+  return {intro:intro||undefined,material,resources,challenge,english};
+}
+async function salvarAula(){
+  const payload={module_id:$('#lMod').value,title:$('#lTitle').value.trim(),description:$('#lDesc').value.trim(),tool:$('#lTool').value,reward_coins:+$('#lReward').value,position:+$('#lPos').value,is_published:true,body:buildBody()};
+  if(!payload.module_id){$('#lMsg').className='msg err';$('#lMsg').textContent='Crie um módulo primeiro.';return;}
+  if(!payload.title){$('#lMsg').className='msg err';$('#lMsg').textContent='Dê um título à aula.';return;}
+  let err;
+  if(EDIT_LES){({error:err}=await window.sb.from('lessons').update(payload).eq('id',EDIT_LES));}
+  else{({error:err}=await window.sb.from('lessons').insert(payload));}
+  if(err){$('#lMsg').className='msg err';$('#lMsg').textContent=err.message;return;}
+  fecharEditores();$('#cMsg').className='msg ok';$('#cMsg').textContent='Aula salva.';await loadCurriculo();
+}
+async function excluirAula(id){if(!confirm('Excluir esta aula?'))return;const {error}=await window.sb.from('lessons').delete().eq('id',id);if(error){$('#cMsg').className='msg err';$('#cMsg').textContent=error.message;return;}await loadCurriculo();}
+
+async function sair(){await window.cqAuth.signOut();localStorage.removeItem('cq_user');location.href='login.html';}
+boot();
+</script>
+</body>
+</html>
