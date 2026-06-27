@@ -2,7 +2,7 @@
 (async function () {
   function kick() {
     document.documentElement.style.display = 'none';
-    location.replace('login.html');
+    location.replace('landing.html');
   }
   try {
     if (!window.sb) return kick();
