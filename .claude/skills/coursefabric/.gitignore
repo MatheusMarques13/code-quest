@@ -1,0 +1,7 @@
+# Python bytecode cache (created when engine.py is imported during a build)
+__pycache__/
+*.pyc
+
+# Generated course/promo artifacts — build these outside the repo
+*.pdf
+*.png
