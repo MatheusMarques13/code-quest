@@ -144,7 +144,9 @@ body.retro-dark .l-title,body.retro-light .l-title,body.retro-dark .m-h,body.ret
         <div class="l-title" id="lTitle">—</div>
         <div class="l-tags" id="lTags"></div>
       </div>
-      <span class="coinchip"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="9.5" opacity=".25"/><circle cx="12" cy="12" r="7.5"/><path d="M12 8.4l1.1 2.3 2.5.4-1.8 1.8.4 2.5L12 16.2l-2.2 1.2.4-2.5-1.8-1.8 2.5-.4z" fill="#fff"/></svg><span id="lCoins">0</span></span>
+      <span class="coinchip"><img src="assets/shop/codecoin.svg" alt="CodeCoin" style="width:15px;height:15px"><span id="lCoins">0</span></span>
+      <span class="coinchip" style="background:var(--lavender-soft);color:#7C3AED"><img src="assets/shop/codegem.svg" alt="CodeGem" style="width:15px;height:15px"><span id="lGems">0</span></span>
+      <a class="coinchip" href="loja.html" style="text-decoration:none">🛍️ LOJA</a>
     </div>
     <div class="l-body">
       <div class="l-side">
@@ -153,6 +155,7 @@ body.retro-dark .l-title,body.retro-light .l-title,body.retro-dark .m-h,body.ret
           <button class="snav" data-tab="rec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg> Recursos</button>
           <button class="snav" data-tab="des"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg> Desafio</button>
           <button class="snav" data-tab="ing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6M4 14l6-6 2-3M2 5h12M7 2h1M22 22l-5-10-5 10M14 18h6"/></svg> Inglês</button>
+          <button class="snav" data-tab="atv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Atividade</button>
         </div>
         <div class="nb side-prog">
           <div class="pixel">PROGRESSO</div>
@@ -166,6 +169,7 @@ body.retro-dark .l-title,body.retro-light .l-title,body.retro-dark .m-h,body.ret
           <div class="pane" id="pane-rec"></div>
           <div class="pane" id="pane-des"></div>
           <div class="pane" id="pane-ing"></div>
+          <div class="pane" id="pane-atv"></div>
         </div>
       </div>
     </div>
@@ -273,6 +277,7 @@ function renderPager(){
   if(pv)pv.onclick=()=>{if(PIDX>0){PIDX--;renderPager();}};
   if(nx)nx.onclick=()=>{if(PIDX<total-1){PIDX++;renderPager();}};
   document.querySelectorAll('.pg-dot').forEach(d=>d.onclick=()=>{PIDX=+d.dataset.p;renderPager();});
+  awardCurrentPage();
 }
 function initPager(mat,intro,title){
   if(!mat||!mat.length){$('#pane-mat').innerHTML=renderMaterial(mat,intro);return;}
@@ -297,7 +302,7 @@ function renderChallenge(c,reward){
   if(!c||!c.x)return '<div class="m-p">Desafio em breve.</div>';
   let h='<div class="m-h" style="margin-top:0">Desafio: faça sozinho!</div><div class="m-p">'+esc(c.x)+'</div>';
   if(c.steps&&c.steps.length){h+='<div class="chal-box">';c.steps.forEach((s,i)=>{h+='<div class="chal-step"><b>'+(i+1)+'.</b> '+esc(s)+'</div>';});h+='</div>';}
-  h+='<button class="btn-done" id="btnDone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L19 7"/></svg> Concluir desafio (+'+(reward||0)+')</button>';
+  h+='<button class="btn-done" id="btnDone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L19 7"/></svg> Concluir desafio (+2 <img src="assets/shop/codegem.svg" style="width:15px;height:15px;vertical-align:-2px">)</button>';
   return h;
 }
 function engSource(e){
@@ -334,31 +339,83 @@ function initEnglish(e){
     if(!sel){sel=b;b.classList.add('sel');return;}
     if(sel===b){b.classList.remove('sel');sel=null;return;}
     if(sel.dataset.col===b.dataset.col){sel.classList.remove('sel');sel=b;b.classList.add('sel');return;}
-    if(sel.dataset.k===b.dataset.k){sel.classList.remove('sel');sel.classList.add('ok');b.classList.add('ok');sel=null;matched++;score();msg.style.color='#059669';msg.textContent='Boa! Acertou.';if(matched===pairs.length)msg.textContent='Perfeito! Você completou a atividade de inglês.';}
+    if(sel.dataset.k===b.dataset.k){sel.classList.remove('sel');sel.classList.add('ok');b.classList.add('ok');sel=null;matched++;score();msg.style.color='#059669';msg.textContent='Boa! Acertou.';
+      if(matched===pairs.length){msg.textContent='Perfeito! Você completou a atividade de inglês.';
+        if(LESSON)tryAward('award_activity',{p_lesson_id:LESSON.id,p_kind:'english'}).then(novo=>{if(novo)msg.textContent='Perfeito! Atividade de inglês completa: +5 CodeCoins 🎉';});}}
     else{const a=sel;a.classList.add('shake');b.classList.add('shake');setTimeout(()=>{a.classList.remove('shake');b.classList.remove('shake');},360);a.classList.remove('sel');sel=null;msg.style.color='var(--pink)';msg.textContent='Quase! Tenta de novo.';}
   }
 }
 function switchTab(t){
   document.querySelectorAll('.snav').forEach(n=>n.classList.toggle('on',n.dataset.tab===t));
-  ['mat','rec','des','ing'].forEach(k=>$('#pane-'+k).classList.toggle('on',k===t));
+  ['mat','rec','des','ing','atv'].forEach(k=>{const p=$('#pane-'+k);if(p)p.classList.toggle('on',k===t);});
+}
+
+/* ---- economia: CodeCoin / CodeGem ---- */
+function walletSet(coins,gems){
+  if(coins!=null)$('#lCoins').textContent=coins;
+  if(gems!=null)$('#lGems').textContent=gems;
+}
+async function walletRefresh(){
+  const p=await window.cqAuth.getProfile();
+  if(p)walletSet(p.coins||0,p.gems||0);
+}
+async function tryAward(fn,args){
+  try{
+    const {data,error}=await window.sb.rpc(fn,args);
+    if(!error&&data===true){await walletRefresh();return true;}
+  }catch(e){}
+  return false;
+}
+const AWARDED_PAGES=new Set();
+function awardCurrentPage(){
+  if(!LESSON)return;
+  if(!AWARDED_PAGES.has(PIDX)){
+    AWARDED_PAGES.add(PIDX);
+    tryAward('award_page',{p_lesson_id:LESSON.id,p_page:PIDX});
+  }
+  if(PAGES[PIDX]&&PAGES[PIDX].kind==='seal'){
+    tryAward('award_material',{p_lesson_id:LESSON.id});
+  }
+}
+
+/* ---- aba Atividade: checklist prático da aula (vale CodeCoins) ---- */
+function renderActivity(){
+  const steps=PAGES.filter(p=>p.kind==='content'&&p.cls==='t-passo').map(p=>p.title);
+  if(!steps.length){$('#pane-atv').innerHTML='<div class="m-p">Atividade em breve.</div>';return;}
+  const key='cq_atv_'+(LESSON?LESSON.id:'');
+  let done=[];try{done=JSON.parse(localStorage.getItem(key))||[];}catch(e){}
+  let h='<div class="m-h" style="margin-top:0">Atividade prática</div>'+
+    '<div class="m-p">Faça na plataforma e marque cada passo que você completou de verdade. Tudo marcado = <b>+5</b> <img src="assets/shop/codecoin.svg" style="width:14px;height:14px;vertical-align:-2px"> CodeCoins!</div><div class="chal-box">';
+  steps.forEach((s,i)=>{h+='<label class="chal-step" style="cursor:pointer"><input type="checkbox" data-atv="'+i+'" '+(done.includes(i)?'checked':'')+' style="margin-right:4px"> '+esc(s)+'</label>';});
+  h+='</div><div class="eng-msg" id="atvMsg"></div>';
+  $('#pane-atv').innerHTML=h;
+  document.querySelectorAll('[data-atv]').forEach(c=>c.onchange=async()=>{
+    const marked=[...document.querySelectorAll('[data-atv]:checked')].map(x=>+x.dataset.atv);
+    try{localStorage.setItem(key,JSON.stringify(marked));}catch(e){}
+    if(marked.length===steps.length){
+      const novo=await tryAward('award_activity',{p_lesson_id:LESSON.id,p_kind:'pratica'});
+      const m=$('#atvMsg');m.style.color='#059669';
+      m.textContent=novo?'Atividade completa! +5 CodeCoins 🎉':'Atividade completa! (recompensa já recebida)';
+    }
+  });
 }
 
 let LESSON=null;
 async function completeChallenge(){
   const btn=$('#btnDone');if(!btn||btn.classList.contains('done'))return;
   btn.disabled=true;
-  const {error}=await window.sb.rpc('complete_lesson',{p_lesson_id:LESSON.id});
+  const {error}=await window.sb.rpc('finish_challenge',{p_lesson_id:LESSON.id});
   if(error){btn.disabled=false;alert('Erro: '+error.message);return;}
-  btn.classList.add('done');btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L19 7"/></svg> Desafio concluído!';
+  btn.classList.add('done');btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L19 7"/></svg> Desafio concluído! +2 💎';
   $('#progFill').style.width='100%';$('#progTxt').textContent='Concluída';
-  const prof=await window.cqAuth.getProfile();if(prof)$('#lCoins').textContent=prof.coins;
+  await walletRefresh();
 }
 
 async function load(){
   const id=new URLSearchParams(location.search).get('id');
   if(!id){$('#loading').textContent='Aula não encontrada.';return;}
   const prof=await window.cqAuth.getProfile();
-  if(prof)$('#lCoins').textContent=prof.coins||0;
+  if(prof)walletSet(prof.coins||0,prof.gems||0);
   const {data:lesson,error}=await window.sb.from('lessons').select('*, module:modules(title,tool)').eq('id',id).single();
   if(error||!lesson){$('#loading').textContent='Não foi possível carregar a aula.';return;}
   LESSON=lesson;
@@ -367,6 +424,7 @@ async function load(){
   const tags=[];if(lesson.module&&lesson.module.tool)tags.push(lesson.module.tool);if(lesson.tool&&lesson.tool!==(lesson.module&&lesson.module.tool))tags.push(lesson.tool);
   $('#lTags').innerHTML=tags.map(t=>'<span class="l-tag tag-'+t+'">'+t.toUpperCase()+'</span>').join('');
   initPager(body.material,body.intro,lesson.title);
+  renderActivity();
   $('#pane-rec').innerHTML=renderResources(body.resources);
   $('#pane-des').innerHTML=renderChallenge(body.challenge,lesson.reward_coins);
   $('#pane-ing').innerHTML=renderEnglish(body.english);

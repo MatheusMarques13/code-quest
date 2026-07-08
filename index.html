@@ -260,7 +260,8 @@ body.retro-dark .tool-name,body.retro-light .tool-name{color:var(--rgold,#f5c518
       </div>
       <div class="stat">
         <div class="stat-icon gold"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="9.5" opacity=".25"/><circle cx="12" cy="12" r="7.5"/><path d="M12 8.4l1.1 2.3 2.5.4-1.8 1.8.4 2.5L12 16.2l-2.2 1.2.4-2.5-1.8-1.8 2.5-.4z" fill="#fff"/></svg></div>
-        <div><div class="stat-num" id="stCoins">240</div><div class="stat-label">Moedas</div></div>
+        <div><div class="stat-num" id="stCoins">0</div><div class="stat-label"><img src="assets/shop/codecoin.svg" style="width:12px;height:12px;vertical-align:-2px"> CodeCoins</div></div>
+        <div><div class="stat-num" id="stGems" style="color:#7C3AED">0</div><div class="stat-label"><img src="assets/shop/codegem.svg" style="width:12px;height:12px;vertical-align:-2px"> CodeGems</div></div>
       </div>
     </div>
 
@@ -307,7 +308,7 @@ body.retro-dark .tool-name,body.retro-light .tool-name{color:var(--rgold,#f5c518
     </div>
 
     <div class="nb card-full" style="margin-top:16px">
-      <div class="nb-header"><h2>Ferramentas</h2><span class="nb-tag tag-blue">FERRAMENTAS</span></div>
+      <div class="nb-header"><h2>Ferramentas</h2><a href="loja.html" style="font-family:'Press Start 2P',monospace;font-size:8px;text-decoration:none;background:var(--gold-soft);color:#B07D17;padding:7px 10px;border-radius:8px;margin-left:auto">🛍️ LOJA</a><span class="nb-tag tag-blue">FERRAMENTAS</span></div>
       <div class="nb-body">
         <div class="nb-holes"><div class="nb-hole"></div><div class="nb-hole"></div><div class="nb-hole"></div></div>
         <div class="tool-grid">
@@ -374,6 +375,7 @@ async function loadProfile(){
     if(prof){
       $('#profileName').textContent = prof.display_name || 'aluno';
       coins = prof.coins || 0; renderCoins();
+      const ge=$('#stGems'); if(ge) ge.textContent = prof.gems || 0;
       $('#stStreak').textContent = prof.streak || 0;
       if(prof.role==='tutor'){const a=$('#adminBtn');if(a)a.style.display='inline-flex';}
     }

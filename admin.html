@@ -80,7 +80,7 @@ textarea{resize:vertical;line-height:1.5}
         <b style="font-size:16px">Novo aluno</b>
         <div class="grid2" style="margin-top:6px">
           <div><label>Nome</label><input id="sName" placeholder="Nome do aluno"></div>
-          <div><label>Email</label><input id="sEmail" type="email" placeholder="aluno@exemplo.com"></div>
+          <div><label>Usuário</label><input id="sEmail" type="text" placeholder="ex.: joao (sem e-mail)"></div>
         </div>
         <label>Senha provisória (mín. 6)</label><input id="sPass" placeholder="senha que o aluno vai usar">
         <div class="row" style="margin-top:12px"><button class="btn btn-pink" onclick="criarAluno()">Criar aluno</button></div>
@@ -169,20 +169,35 @@ async function boot(){
 }
 
 async function loadStudents(){
-  const {data:studs}=await window.sb.from('profiles').select('id,display_name,email,coins,streak').eq('role','student').order('display_name');
+  const {data:studs}=await window.sb.from('profiles').select('id,display_name,email,coins,gems,streak').eq('role','student').order('display_name');
   const {data:prog}=await window.sb.from('lesson_progress').select('student_id,status');
   const doneBy={};(prog||[]).filter(p=>p.status==='completed').forEach(p=>{doneBy[p.student_id]=(doneBy[p.student_id]||0)+1;});
   const el=$('#studList');
   if(!studs||!studs.length){el.innerHTML='<div class="sub">Nenhum aluno ainda.</div>';return;}
   el.innerHTML=studs.map(s=>`<div class="stud"><div class="av">${(s.display_name||'?').charAt(0).toUpperCase()}</div>
-    <div class="info"><b>${esc(s.display_name||'(sem nome)')}</b><small>${esc(s.email||'')}</small></div>
-    <span class="badge">${s.coins||0} moedas</span>
+    <div class="info"><b>${esc(s.display_name||'(sem nome)')}</b><small>${esc((s.email||'').split('@')[0])}</small></div>
+    <span class="badge">${s.coins||0} 🪙</span>
+    <span class="badge" style="background:var(--lavender-soft);color:#7C3AED">${s.gems||0} 💎</span>
+    <button class="tbtn" onclick="ajustarCarteira('${s.id}','${esc(s.display_name||'aluno')}')" title="Presentear ou retirar CodeCoins/CodeGems">🎁 / −</button>
     <span class="badge" style="background:var(--blue-soft);color:var(--blue-deep)">${doneBy[s.id]||0} aulas</span></div>`).join('');
 }
 
+async function ajustarCarteira(id,nome){
+  const c=prompt('CodeCoins para '+nome+' (use negativo para retirar):','0');if(c===null)return;
+  const g=prompt('CodeGems para '+nome+' (use negativo para retirar):','0');if(g===null)return;
+  const dc=parseInt(c,10)||0, dg=parseInt(g,10)||0;
+  if(!dc&&!dg)return;
+  const motivo=prompt('Motivo (aparece no extrato do aluno):','Presente do professor')||'';
+  const {error}=await window.sb.rpc('admin_adjust_wallet',{p_student:id,p_coins:dc,p_gems:dg,p_reason:motivo});
+  if(error){alert('Erro: '+error.message);return;}
+  await loadStudents();
+}
+
 async function criarAluno(){
-  const name=$('#sName').value.trim(), email=$('#sEmail').value.trim(), pass=$('#sPass').value, msg=$('#sMsg');
-  if(!name||!email||pass.length<6){msg.className='msg err';msg.textContent='Preencha nome, email e senha (mín. 6).';return;}
+  const name=$('#sName').value.trim(), pass=$('#sPass').value, msg=$('#sMsg');
+  let email=$('#sEmail').value.trim().toLowerCase();
+  if(!name||!email||pass.length<6){msg.className='msg err';msg.textContent='Preencha nome, usuário e senha (mín. 6).';return;}
+  if(!email.includes('@'))email=email.replace(/[^a-z0-9._-]/g,'')+'@alunos.codequest.app';
   msg.className='msg';msg.textContent='Criando...';
   const sess=await window.cqAuth.getSession();
   try{

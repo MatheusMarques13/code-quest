@@ -715,7 +715,7 @@ body.cafe-dark .rm-footer a:hover, body.cafe-light .rm-footer a:hover { text-dec
     <div id="savedUser"></div>
 
     <div class="field">
-      <input type="email" id="inputEmail" placeholder="Email" autocomplete="email">
+      <input type="text" id="inputEmail" placeholder="Usuário" autocomplete="username">
     </div>
 
     <div class="field">
@@ -769,11 +769,12 @@ body.cafe-dark .rm-footer a:hover, body.cafe-light .rm-footer a:hover { text-dec
 async function doSubmit(){
   const btn = document.getElementById('submitBtn');
   const msg = document.getElementById('msg');
-  const email = document.getElementById('inputEmail').value.trim();
+  const raw = document.getElementById('inputEmail').value.trim().toLowerCase();
+  const email = raw && !raw.includes('@') ? raw + '@alunos.codequest.app' : raw;
   const pass = document.getElementById('inputPass').value;
 
   if(!email || !pass){
-    msg.className='msg err'; msg.textContent='Preencha email e senha'; return;
+    msg.className='msg err'; msg.textContent='Preencha usuário e senha'; return;
   }
 
   btn.disabled = true;

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code Quest — Loja</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Press+Start+2P&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/auth-guard.js"></script>
+<style>
+:root{--paper:#FFFDF8;--paper-line:#E8E4DF;--pink:#FF6B9D;--pink-soft:#FFE4EE;--pink-hover:#FF4F88;--blue:#6DBDE8;--blue-soft:#E3F2FD;--blue-deep:#4A9BC7;--lavender:#C4B5FD;--lavender-soft:#F0ECFF;--mint:#A7F3D0;--mint-soft:#ECFDF5;--gold:#E0A93C;--gold-soft:#FFF3D6;--text:#1E293B;--text-mid:#475569;--text-light:#94A3B8;--radius:6px;--shadow:0 1px 3px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.04)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'IBM Plex Mono',monospace;font-size:16px;color:var(--text);min-height:100vh;font-weight:500;-webkit-font-smoothing:antialiased;background:repeating-linear-gradient(2deg,transparent,transparent 18px,rgba(139,90,43,0.04) 18px,rgba(139,90,43,0.04) 19px),linear-gradient(165deg,#F5E6D3 0%,#EDD9C0 25%,#E8D0B3 50%,#ECDCC8 75%,#F0E2D0 100%);background-attachment:fixed}
+.pixel{font-family:'Press Start 2P',monospace}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 20px 48px;position:relative;z-index:1}
+.head{display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.back-btn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.85);border:1px solid #E5E0DA;color:var(--pink);cursor:pointer;text-decoration:none;flex-shrink:0;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.back-btn:hover{background:var(--pink);color:#fff}
+.back-btn svg{width:18px;height:18px}
+h1{font-size:24px;font-weight:700;flex:1;min-width:150px}
+.wallet{display:flex;gap:8px}
+.wchip{display:inline-flex;align-items:center;gap:7px;font-family:'Press Start 2P',monospace;font-size:9px;padding:9px 12px;border-radius:10px;background:var(--gold-soft);color:#B07D17;border:1px solid rgba(176,125,23,.25)}
+.wchip.gem{background:var(--lavender-soft);color:#7C3AED;border-color:rgba(124,58,237,.25)}
+.wchip img{width:18px;height:18px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 18px}
+.tab{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:14px;border:1px solid var(--paper-line);background:var(--paper);color:var(--text-mid);padding:9px 15px;border-radius:10px;cursor:pointer;box-shadow:var(--shadow)}
+.tab.on{background:var(--pink-soft);color:var(--pink-hover);border-color:var(--pink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:14px}
+.item{background:var(--paper);border:1px solid var(--paper-line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:9px;box-shadow:var(--shadow);position:relative}
+.item.r-raro{border-color:var(--blue)}
+.item.r-epico{border-color:var(--lavender)}
+.item.r-lendario{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 0 18px rgba(224,169,60,.35);animation:lgl 2.4s ease-in-out infinite}
+@keyframes lgl{0%,100%{box-shadow:0 0 0 1px var(--gold),0 0 12px rgba(224,169,60,.25)}50%{box-shadow:0 0 0 1px var(--gold),0 0 26px rgba(224,169,60,.5)}}
+.item .art{height:96px;display:flex;align-items:center;justify-content:center}
+.item .art img{width:88px;height:88px}
+.rar{font-family:'Press Start 2P',monospace;font-size:6px;letter-spacing:1px;padding:5px 8px;border-radius:6px;position:absolute;top:10px;right:10px}
+.rar.comum{background:#EEF2F7;color:#64748B}.rar.raro{background:var(--blue-soft);color:var(--blue-deep)}.rar.epico{background:var(--lavender-soft);color:#7C3AED}.rar.lendario{background:var(--gold-soft);color:#B07D17}
+.item b{font-size:16px;line-height:1.25}
+.item small{color:var(--text-mid);font-size:12.5px;line-height:1.5;flex:1}
+.price{display:flex;align-items:center;gap:6px;font-weight:700;font-size:15px}
+.price img{width:17px;height:17px}
+.buy{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:14px;border:none;border-radius:9px;padding:10px;cursor:pointer;background:var(--pink-soft);color:var(--pink-hover);transition:all .15s}
+.buy:hover:not(:disabled){transform:translateY(-1px);background:var(--pink);color:#fff}
+.buy:disabled{cursor:default;opacity:.55}
+.buy.owned{background:var(--mint-soft);color:#059669;opacity:1}
+.eq{font-size:12px;display:flex;align-items:center;gap:6px;color:var(--text-mid);cursor:pointer;user-select:none}
+.msg{min-height:20px;font-size:13px;margin-top:10px}
+.msg.ok{color:#059669}.msg.err{color:var(--pink-hover)}
+.loading{text-align:center;padding:60px;color:var(--text-light)}
+.dev-seal{display:inline-flex;align-items:center;gap:10px;opacity:.75}
+.dev-seal svg{width:36px;height:27px}
+.dev-seal span{font-family:'Press Start 2P',monospace;font-size:6px;letter-spacing:1px;line-height:1.9;color:#B08A1E}
+.seal-foot{display:flex;justify-content:center;padding:30px 0 8px}
+@media(max-width:600px){.grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <a class="back-btn" href="index.html" title="Voltar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
+    <h1>Loja do Code Quest</h1>
+    <div class="wallet">
+      <span class="wchip"><img src="assets/shop/codecoin.svg" alt="CodeCoin"><span id="wCoins">0</span></span>
+      <span class="wchip gem"><img src="assets/shop/codegem.svg" alt="CodeGem"><span id="wGems">0</span></span>
+    </div>
+  </div>
+  <div class="tabs" id="tabs">
+    <button class="tab on" data-f="tudo">Tudo</button>
+    <button class="tab" data-f="colecionavel">Colecionáveis</button>
+    <button class="tab" data-f="roupa">Roupas</button>
+    <button class="tab" data-f="emblema">Emblemas</button>
+    <button class="tab" data-f="meus">Meus itens</button>
+  </div>
+  <div class="loading" id="loading">Abrindo a loja…</div>
+  <div class="grid" id="grid" style="display:none"></div>
+  <div class="msg" id="msg"></div>
+  <div class="seal-foot"><div class="dev-seal"><svg viewBox="0 0 64 48" fill="none" aria-hidden="true"><defs><linearGradient id="gsl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5D76E"/><stop offset="1" stop-color="#C9A227"/></linearGradient></defs><path fill="#C9A227" opacity=".5" d="M10 30h4v-4h4v-4h4v4h-4v4h-4v4h-4zM54 30h-4v-4h-4v-4h-4v4h4v4h4v4h4z"/><path fill="url(#gsl)" d="M32 6l6 10-6 10-6-10z"/><path fill="url(#gsl)" opacity=".85" d="M23 28l4 7h-8zM41 28l4 7h-8z"/><rect x="30" y="30" width="4" height="4" fill="#7C3AED"/></svg><span>DESENVOLVIDO POR<br>MATHEUS MARQUES</span></div></div>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+let ITEMS=[],OWNED={},FILTER='tudo',PROFILE=null;
+const RAR={comum:'Comum',raro:'Raro',epico:'Épico',lendario:'Lendário'};
+
+async function loadAll(){
+  PROFILE=await window.cqAuth.getProfile();
+  if(PROFILE){$('#wCoins').textContent=PROFILE.coins||0;$('#wGems').textContent=PROFILE.gems||0;}
+  const {data:items}=await window.sb.from('shop_items').select('*').eq('is_active',true).order('position');
+  const {data:inv}=await window.sb.from('inventory').select('item_id,equipped');
+  ITEMS=items||[];OWNED={};(inv||[]).forEach(i=>OWNED[i.item_id]=i);
+  render();
+  $('#loading').style.display='none';$('#grid').style.display='grid';
+}
+function canAfford(it){return PROFILE&&(PROFILE.coins||0)>=it.price_coins&&(PROFILE.gems||0)>=it.price_gems;}
+function render(){
+  const list=ITEMS.filter(it=>FILTER==='tudo'?true:FILTER==='meus'?!!OWNED[it.id]:it.category===FILTER);
+  if(!list.length){$('#grid').innerHTML='<div class="loading" style="grid-column:1/-1">'+(FILTER==='meus'?'Você ainda não tem itens. Ganhe CodeCoins nas aulas!':'Nada por aqui ainda.')+'</div>';return;}
+  $('#grid').innerHTML=list.map(it=>{
+    const own=OWNED[it.id];
+    const price=(it.price_coins?'<span class="price"><img src="assets/shop/codecoin.svg" alt="">'+it.price_coins+'</span>':'')+
+                (it.price_gems?'<span class="price"><img src="assets/shop/codegem.svg" alt="">'+it.price_gems+'</span>':'');
+    let btn;
+    if(own)btn='<button class="buy owned" disabled>✓ Seu item</button>'+
+      '<label class="eq"><input type="checkbox" data-eq="'+it.id+'" '+(own.equipped?'checked':'')+'> equipado no perfil</label>';
+    else if(canAfford(it))btn='<button class="buy" data-buy="'+it.id+'">Comprar</button>';
+    else btn='<button class="buy" disabled>Saldo insuficiente</button>';
+    return '<div class="item r-'+it.rarity+'"><span class="rar '+it.rarity+'">'+RAR[it.rarity]+'</span>'+
+      '<div class="art"><img src="'+esc(it.icon)+'" alt=""></div><b>'+esc(it.name)+'</b><small>'+esc(it.description)+'</small>'+
+      '<div style="display:flex;gap:12px">'+price+'</div>'+btn+'</div>';
+  }).join('');
+  document.querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>buy(b.dataset.buy));
+  document.querySelectorAll('[data-eq]').forEach(c=>c.onchange=()=>equip(c.dataset.eq,c.checked));
+}
+async function buy(id){
+  const it=ITEMS.find(x=>x.id===id);if(!it)return;
+  if(!confirm('Comprar "'+it.name+'"'+(it.price_coins?' por '+it.price_coins+' CodeCoins':' por '+it.price_gems+' CodeGems')+'?'))return;
+  const {data,error}=await window.sb.rpc('buy_item',{p_item_id:id});
+  const m=$('#msg');
+  if(error){m.className='msg err';m.textContent='Erro: '+error.message;return;}
+  if(data!=='ok'){m.className='msg err';m.textContent={ja_possui:'Você já tem este item.',saldo_insuficiente:'Saldo insuficiente.',item_indisponivel:'Item indisponível.'}[data]||data;return;}
+  m.className='msg ok';m.textContent='"'+it.name+'" agora é seu! 🎉';
+  await loadAll();
+}
+async function equip(id,on){await window.sb.rpc('set_equipped',{p_item_id:id,p_on:on});if(OWNED[id])OWNED[id].equipped=on;}
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{FILTER=t.dataset.f;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));render();});
+loadAll();
+</script>
+</body>
+</html>
